@@ -1,0 +1,997 @@
+<!-- Tratamientos -->
+<form [formGroup]="formTratamiento" (ngSubmit)="onSubmit()">
+    <div class="row">
+
+        <!-- ======================================================================================================== -->
+        <!-- Estados/acciones en dientes -->
+        <!-- ======================================================================================================== -->
+        <div class="col-sm-12 col-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <h3>Tratamiento vista transversal</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio3" name="customRadio"
+                                        class="custom-control-input" (change)="selectColor('green')" />
+                                    <label class="custom-control-label" for="customRadio3"
+                                        style="color: green;">Sellante</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio4" name="customRadio"
+                                        class="custom-control-input" (change)="selectColor('steelblue')" />
+                                    <label class="custom-control-label" for="customRadio4"
+                                        style="color: steelblue;">Restauración</label>
+                                    <!-- Amalgama -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio5" name="customRadio"
+                                        class="custom-control-input" (change)="selectColor('blueviolet')" />
+                                    <label class="custom-control-label" for="customRadio5"
+                                        style="color: blueviolet;">Composite</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio6" name="customRadio"
+                                        class="custom-control-input" (change)="selectColor('teal')" />
+                                    <label class="custom-control-label" for="customRadio6"
+                                        style="color: teal;">Incrustación</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <hr>
+                                <h3>Tratamiento vista frontal</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio11" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('endodoncia')" />
+                                    <label class="custom-control-label" for="customRadio11">Endodoncia</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio13" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('ausente')" />
+                                    <label class="custom-control-label" for="customRadio13">Pieza ausente</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio15" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('piezacoronada')" />
+                                    <label class="custom-control-label" for="customRadio15">Pieza coronada</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio16" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('implante')" />
+                                    <label class="custom-control-label" for="customRadio16">Implante</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio18" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('pulpotomia')" />
+                                    <label class="custom-control-label" for="customRadio18">Pulpotomia</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio20" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('coronaacero')" />
+                                    <label class="custom-control-label" for="customRadio20">Corona acero
+                                        inoxidable</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio21" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('coronaacetato')" />
+                                    <label class="custom-control-label" for="customRadio21">Corona acetato</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio22" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('fluoruro')" />
+                                    <label class="custom-control-label" for="customRadio22">Fluoruro de plata</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio23" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('pulpectomia')" />
+                                    <label class="custom-control-label" for="customRadio23">Pulpectomía</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio24" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('protesist')" />
+                                    <label class="custom-control-label" for="customRadio24">Protesis total</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio25" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('protesisp')" />
+                                    <label class="custom-control-label" for="customRadio25">Protesis parcial</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio mr-1">
+                                    <input type="radio" id="customRadio27" name="customRadio"
+                                        class="custom-control-input" (change)="selectOverlay('dientepilar')" />
+                                    <label class="custom-control-label" for="customRadio27">Diente pilar</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================================================================================================== -->
+        <!-- Imagenes de dientes -->
+        <!-- ======================================================================================================== -->
+        <div class="col-sm-12 col-md-10">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label" for="civil">Categoría:</label>
+                                <select class="form-control form-control-lg form-select" aria-label="Categorias"
+                                    (ngModelChange)="validacionSelectPrestacion()">
+                                    <option *ngFor="let c of categorias" [value]="c.codCategoria">{{ c.nomCategoria }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label" for="civil">Prestaciones:</label>
+                                <select class="form-control form-control-lg form-select" aria-label="Categorias"
+                                    formControlName="prest" (ngModelChange)="validacionSelectPrestacion()">
+                                    <option *ngFor="let p of prestaciones" [value]="p.codPrestacion">
+                                        {{ p.valPrestacion | currency:'USD':'symbol':'1.2-2' }} {{ p.nomPrestacion }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="row text-center">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-dark w-100"
+                                    (click)="onSelectPrestacion('G1')">Grupo 1</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-dark w-100"
+                                    (click)="onSelectPrestacion('G2')">Grupo 2</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-dark w-100"
+                                    (click)="onSelectPrestacion('G3')">Grupo 3</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="line-horizontal"></div>
+                        <div class="line-vertical"></div>
+
+                        <div class="row d-flex">
+                            <div *ngFor="let diente of supAdulto" class="col p-0" style="width: 7%;">
+                                <div *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                    class="line-protesis-total1">
+                                </div>
+                                <div *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                    class="line-protesis-total2">
+                                </div>
+                                <div class="col-md-12 d-flex justify-content-center p-0"
+                                    (click)="onSelectPrestacion(diente.cod)">
+                                    <div class="image-container" (click)="placeOverlayImage(diente.cod)">
+                                        <img src={{diente.img_sano}} alt="sano" class="background-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('endodoncia')"
+                                            src={{diente.img_endodoncia}} alt="endodoncia" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('endodonciap')"
+                                            src={{diente.img_endodonciap}} alt="endodonciap" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('ausente')"
+                                            style="filter: brightness(40%);" src={{diente.img_sano}} alt="ausente"
+                                            class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('piezacoronada')"
+                                            src={{diente.img_piezacoronada}} alt="piezacoronada" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('implante')"
+                                            src={{diente.img_implante}} alt="implante" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('lesion')"
+                                            src={{diente.img_lesion}} alt="lesion" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('pulpotomia')"
+                                            src={{diente.img_pulpotomia}} alt="pulpotomia" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('pulpotomiap')"
+                                            src={{diente.img_pulpotomiap}} alt="pulpotomiap" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('coronaacero')"
+                                            src={{diente.img_coronaacero}} alt="coronaacero" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('coronaacetato')"
+                                            src={{diente.img_coronaacetato}} alt="coronaacetato" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('fluoruro')"
+                                            src={{diente.img_fluoruro}} alt="fluoruro" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('pulpectomia')"
+                                            src={{diente.img_pulpectomia}} alt="pulpectomia" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('pulpectomiap')"
+                                            src={{diente.img_pulpectomiap}} alt="pulpectomiap" class="overlay-image">
+
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('dientepilar')"
+                                            src={{diente.img_dientepilar}} alt="dientepilar" class="overlay-image">
+
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('extracion')"
+                                            src={{diente.img_extraccion}} alt="extracion" class="overlay-image">
+
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('protesisp')"
+                                            src={{diente.img_protesisp}} alt="protesisp" class="overlay-image">
+
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                            src={{diente.img_sano}} alt="protesist" class="overlay-image">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 d-flex justify-content-center p-0">
+                                    <h3>{{diente.nom}}</h3>
+                                </div>
+                                <div class="col-md-12 d-flex justify-content-center p-0">
+                                    <div class="circle-container">
+
+                                        <div *ngIf="['d18','d17','d16','d15','d14'].includes(diente.cod)"
+                                            class="circle">
+                                            <div class="state" id="state1"
+                                                [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                            <div class="state" id="state2"
+                                                [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                            <div class="state" id="state3"
+                                                [style.background-color]="stsDientes[diente.cod]?.state3"
+                                                (click)="changeStateColor(diente.cod, 'state3')">P</div>
+                                            <div class="state" id="state4"
+                                                [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                            <div class="state" id="state5"
+                                                [style.background-color]="stsDientes[diente.cod]?.state5"
+                                                (click)="changeStateColor(diente.cod, 'state5')">O</div>
+                                        </div>
+
+                                        <div *ngIf="['d13', 'd12', 'd11'].includes(diente.cod)" class="circle">
+                                            <div class="state" id="state1"
+                                                [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                            <div class="state" id="state2"
+                                                [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                            <div class="state" id="state3"
+                                                [style.background-color]="stsDientes[diente.cod]?.state3"
+                                                (click)="changeStateColor(diente.cod, 'state3')">P</div>
+                                            <div class="state" id="state4"
+                                                [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                            <div class="state" id="state5"
+                                                [style.background-color]="stsDientes[diente.cod]?.state7"
+                                                (click)="changeStateColor(diente.cod, 'state7')">I</div>
+                                        </div>
+
+                                        <div *ngIf="['d21', 'd22', 'd23'].includes(diente.cod)" class="circle">
+                                            <div class="state" id="state1"
+                                                [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                            <div class="state" id="state2"
+                                                [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                            <div class="state" id="state3"
+                                                [style.background-color]="stsDientes[diente.cod]?.state3"
+                                                (click)="changeStateColor(diente.cod, 'state3')">P</div>
+                                            <div class="state" id="state4"
+                                                [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                            <div class="state" id="state5"
+                                                [style.background-color]="stsDientes[diente.cod]?.state7"
+                                                (click)="changeStateColor(diente.cod, 'state7')">I</div>
+                                        </div>
+
+                                        <div *ngIf="['d24','d25','d26','d27','d28'].includes(diente.cod)"
+                                            class="circle">
+                                            <div class="state" id="state1"
+                                                [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                            <div class="state" id="state2"
+                                                [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                            <div class="state" id="state3"
+                                                [style.background-color]="stsDientes[diente.cod]?.state3"
+                                                (click)="changeStateColor(diente.cod, 'state3')">P</div>
+                                            <div class="state" id="state4"
+                                                [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                            <div class="state" id="state5"
+                                                [style.background-color]="stsDientes[diente.cod]?.state5"
+                                                (click)="changeStateColor(diente.cod, 'state5')">O</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2 m-auto">
+                                <a (click)="onSelectPrestacion('Boca')">
+                                    <img src='assets/images/pages/boca/boca.png' style="width: 100%;" alt="boca">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <div class="row d-flex">
+
+                                    <div *ngFor="let diente of supMenor" class="col p-0" style="width: 7%;">
+                                        <div *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                            class="line-protesis-total1">
+                                        </div>
+                                        <div *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                            class="line-protesis-total2">
+                                        </div>
+                                        <div class="col-md-12 d-flex justify-content-center p-0"
+                                            (click)="onSelectPrestacion(diente.cod)">
+                                            <div class="image-container-menor" (click)="placeOverlayImage(diente.cod)">
+                                                <img src={{diente.img_sano}} alt="sano" class="background-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('endodoncia')"
+                                                    src={{diente.img_endodoncia}} alt="endodoncia"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('endodonciap')"
+                                                    src={{diente.img_endodonciap}} alt="endodonciap"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('ausente')"
+                                                    style="filter: brightness(40%);" src={{diente.img_sano}}
+                                                    alt="ausente" class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('piezacoronada')"
+                                                    src={{diente.img_piezacoronada}} alt="piezacoronada"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('implante')"
+                                                    src={{diente.img_implante}} alt="implante" class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('lesion')"
+                                                    src={{diente.img_lesion}} alt="lesion" class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('pulpotomia')"
+                                                    src={{diente.img_pulpotomia}} alt="pulpotomia"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('pulpotomiap')"
+                                                    src={{diente.img_pulpotomiap}} alt="pulpotomiap"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('coronaacero')"
+                                                    src={{diente.img_coronaacero}} alt="coronaacero"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('coronaacetato')"
+                                                    src={{diente.img_coronaacetato}} alt="coronaacetato"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('fluoruro')"
+                                                    src={{diente.img_fluoruro}} alt="fluoruro" class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('pulpectomia')"
+                                                    src={{diente.img_pulpectomia}} alt="pulpectomia"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('pulpectomiap')"
+                                                    src={{diente.img_pulpectomiap}} alt="pulpectomiap"
+                                                    class="overlay-image">
+
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('dientepilar')"
+                                                    src={{diente.img_dientepilar}} alt="dientepilar"
+                                                    class="overlay-image">
+
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('extracion')"
+                                                    src={{diente.img_extraccion}} alt="extracion" class="overlay-image">
+
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('protesisp')"
+                                                    src={{diente.img_protesisp}} alt="protesisp" class="overlay-image">
+
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                                    src={{diente.img_sano}} alt="protesist" class="overlay-image">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 d-flex justify-content-center p-0">
+                                            <h3>{{diente.nom}}</h3>
+                                        </div>
+                                        <div class="col-md-12 d-flex justify-content-center p-0">
+                                            <div class="circle-container">
+
+                                                <div *ngIf="['d55','d54'].includes(diente.cod)" class="circle">
+                                                    <div class="state" id="state1"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                        (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                                    <div class="state" id="state2"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                        (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                                    <div class="state" id="state3"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state3"
+                                                        (click)="changeStateColor(diente.cod, 'state3')">P</div>
+                                                    <div class="state" id="state4"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                        (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                                    <div class="state" id="state5"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state5"
+                                                        (click)="changeStateColor(diente.cod, 'state5')">O</div>
+                                                </div>
+
+                                                <div *ngIf="['d53','d52','d51'].includes(diente.cod)" class="circle">
+                                                    <div class="state" id="state1"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                        (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                                    <div class="state" id="state2"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                        (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                                    <div class="state" id="state3"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state3"
+                                                        (click)="changeStateColor(diente.cod, 'state3')">P</div>
+                                                    <div class="state" id="state4"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                        (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                                    <div class="state" id="state5"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state7"
+                                                        (click)="changeStateColor(diente.cod, 'state7')">I</div>
+                                                </div>
+
+                                                <div *ngIf="['d61','d62','d63'].includes(diente.cod)" class="circle">
+                                                    <div class="state" id="state1"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                        (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                                    <div class="state" id="state2"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                        (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                                    <div class="state" id="state3"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state3"
+                                                        (click)="changeStateColor(diente.cod, 'state3')">P</div>
+                                                    <div class="state" id="state4"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                        (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                                    <div class="state" id="state5"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state7"
+                                                        (click)="changeStateColor(diente.cod, 'state7')">I</div>
+                                                </div>
+
+                                                <div *ngIf="['d64','d65'].includes(diente.cod)" class="circle">
+                                                    <div class="state" id="state1"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                        (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                                    <div class="state" id="state2"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                        (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                                    <div class="state" id="state3"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state3"
+                                                        (click)="changeStateColor(diente.cod, 'state3')">P</div>
+                                                    <div class="state" id="state4"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                        (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                                    <div class="state" id="state5"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state5"
+                                                        (click)="changeStateColor(diente.cod, 'state5')">O</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row d-flex mt-2">
+                                    <div *ngFor="let diente of infMenor" class="col p-0" style="width: 7%;">
+
+                                        <div class="col-md-12 d-flex justify-content-center p-0">
+                                            <div class="circle-container">
+
+                                                <div *ngIf="['d85','d84'].includes(diente.cod)" class="circle">
+                                                    <div class="state" id="state1"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                        (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                                    <div class="state" id="state2"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                        (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                                    <div class="state" id="state3"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state8"
+                                                        (click)="changeStateColor(diente.cod, 'state8')">L</div>
+                                                    <div class="state" id="state4"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                        (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                                    <div class="state" id="state5"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state5"
+                                                        (click)="changeStateColor(diente.cod, 'state5')">O</div>
+                                                </div>
+
+                                                <div *ngIf="['d83','d82','d81'].includes(diente.cod)" class="circle">
+                                                    <div class="state" id="state1"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                        (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                                    <div class="state" id="state2"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                        (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                                    <div class="state" id="state3"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state8"
+                                                        (click)="changeStateColor(diente.cod, 'state8')">L</div>
+                                                    <div class="state" id="state4"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                        (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                                    <div class="state" id="state5"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state7"
+                                                        (click)="changeStateColor(diente.cod, 'state7')">I</div>
+                                                </div>
+
+                                                <div *ngIf="['d71','d72','d73'].includes(diente.cod)" class="circle">
+                                                    <div class="state" id="state1"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                        (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                                    <div class="state" id="state2"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                        (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                                    <div class="state" id="state3"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state8"
+                                                        (click)="changeStateColor(diente.cod, 'state8')">L</div>
+                                                    <div class="state" id="state4"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                        (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                                    <div class="state" id="state5"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state7"
+                                                        (click)="changeStateColor(diente.cod, 'state7')">I</div>
+                                                </div>
+
+                                                <div *ngIf="['d74','d75'].includes(diente.cod)" class="circle">
+                                                    <div class="state" id="state1"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                        (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                                    <div class="state" id="state2"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                        (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                                    <div class="state" id="state3"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state8"
+                                                        (click)="changeStateColor(diente.cod, 'state8')">L</div>
+                                                    <div class="state" id="state4"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                        (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                                    <div class="state" id="state5"
+                                                        [style.background-color]="stsDientes[diente.cod]?.state5"
+                                                        (click)="changeStateColor(diente.cod, 'state5')">O</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                            class="line-protesis-total3">
+                                        </div>
+                                        <div *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                            class="line-protesis-total4">
+                                        </div>
+                                        <div class="col-md-12 d-flex justify-content-center p-0"
+                                            (click)="onSelectPrestacion(diente.cod)">
+                                            <div class="image-container-menor" (click)="placeOverlayImage(diente.cod)">
+                                                <img src={{diente.img_sano}} alt="sano" class="background-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('endodoncia')"
+                                                    src={{diente.img_endodoncia}} alt="endodoncia"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('endodonciap')"
+                                                    src={{diente.img_endodonciap}} alt="endodonciap"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('ausente')"
+                                                    style="filter: brightness(40%);" src={{diente.img_sano}}
+                                                    alt="ausente" class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('piezacoronada')"
+                                                    src={{diente.img_piezacoronada}} alt="piezacoronada"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('implante')"
+                                                    src={{diente.img_implante}} alt="implante" class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('lesion')"
+                                                    src={{diente.img_lesion}} alt="lesion" class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('pulpotomia')"
+                                                    src={{diente.img_pulpotomia}} alt="pulpotomia"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('pulpotomiap')"
+                                                    src={{diente.img_pulpotomiap}} alt="pulpotomiap"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('coronaacero')"
+                                                    src={{diente.img_coronaacero}} alt="coronaacero"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('coronaacetato')"
+                                                    src={{diente.img_coronaacetato}} alt="coronaacetato"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('fluoruro')"
+                                                    src={{diente.img_fluoruro}} alt="fluoruro" class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('pulpectomia')"
+                                                    src={{diente.img_pulpectomia}} alt="pulpectomia"
+                                                    class="overlay-image">
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('pulpectomiap')"
+                                                    src={{diente.img_pulpectomiap}} alt="pulpectomiap"
+                                                    class="overlay-image">
+
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('dientepilar')"
+                                                    src={{diente.img_dientepilar}} alt="dientepilar"
+                                                    class="overlay-image">
+
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('extracion')"
+                                                    src={{diente.img_extraccion}} alt="extracion" class="overlay-image">
+
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('protesisp')"
+                                                    src={{diente.img_protesisp}} alt="protesisp" class="overlay-image">
+
+                                                <img *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                                    src={{diente.img_sano}} alt="protesist" class="overlay-image">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 d-flex justify-content-center p-0">
+                                            <h3>{{diente.nom}}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 m-auto">
+                                <a (click)="onSelectPrestacion('Maxilar')">
+                                    <img class="mb-3" src='assets/images/pages/boca/maxilar.png' style="width: 100%;"
+                                        alt="maxilar">
+                                </a>
+                                <a (click)="onSelectPrestacion('Mandibula')">
+                                    <img class="mt-3" src='assets/images/pages/boca/mandibula.png' style="width: 100%;"
+                                        alt="mandibula">
+                                </a>
+
+                            </div>
+                        </div>
+
+                        <div class="row d-flex">
+                            <div *ngFor="let diente of infAdulto" class="col p-0" style="width: 7%;">
+                                <div class="col-md-12 d-flex justify-content-center p-0">
+                                    <div class="circle-container">
+
+                                        <div *ngIf="['d48','d47','d46','d45','d44'].includes(diente.cod)"
+                                            class="circle">
+                                            <div class="state" id="state1"
+                                                [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                            <div class="state" id="state2"
+                                                [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                            <div class="state" id="state3"
+                                                [style.background-color]="stsDientes[diente.cod]?.state8"
+                                                (click)="changeStateColor(diente.cod, 'state8')">L</div>
+                                            <div class="state" id="state4"
+                                                [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                            <div class="state" id="state5"
+                                                [style.background-color]="stsDientes[diente.cod]?.state5"
+                                                (click)="changeStateColor(diente.cod, 'state5')">O</div>
+                                        </div>
+
+                                        <div *ngIf="['d43','d42','d41'].includes(diente.cod)" class="circle">
+                                            <div class="state" id="state1"
+                                                [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                            <div class="state" id="state2"
+                                                [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                            <div class="state" id="state3"
+                                                [style.background-color]="stsDientes[diente.cod]?.state8"
+                                                (click)="changeStateColor(diente.cod, 'state8')">L</div>
+                                            <div class="state" id="state4"
+                                                [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                            <div class="state" id="state5"
+                                                [style.background-color]="stsDientes[diente.cod]?.state7"
+                                                (click)="changeStateColor(diente.cod, 'state7')">I</div>
+                                        </div>
+
+                                        <div *ngIf="['d31','d32','d33'].includes(diente.cod)" class="circle">
+                                            <div class="state" id="state1"
+                                                [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                            <div class="state" id="state2"
+                                                [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                            <div class="state" id="state3"
+                                                [style.background-color]="stsDientes[diente.cod]?.state8"
+                                                (click)="changeStateColor(diente.cod, 'state8')">L</div>
+                                            <div class="state" id="state4"
+                                                [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                            <div class="state" id="state5"
+                                                [style.background-color]="stsDientes[diente.cod]?.state7"
+                                                (click)="changeStateColor(diente.cod, 'state7')">I</div>
+                                        </div>
+
+                                        <div *ngIf="['d34','d35','d36','d37','d38'].includes(diente.cod)"
+                                            class="circle">
+                                            <div class="state" id="state1"
+                                                [style.background-color]="stsDientes[diente.cod]?.state1"
+                                                (click)="changeStateColor(diente.cod, 'state1')">V</div>
+                                            <div class="state" id="state2"
+                                                [style.background-color]="stsDientes[diente.cod]?.state4"
+                                                (click)="changeStateColor(diente.cod, 'state4')">D</div>
+                                            <div class="state" id="state3"
+                                                [style.background-color]="stsDientes[diente.cod]?.state8"
+                                                (click)="changeStateColor(diente.cod, 'state8')">L</div>
+                                            <div class="state" id="state4"
+                                                [style.background-color]="stsDientes[diente.cod]?.state2"
+                                                (click)="changeStateColor(diente.cod, 'state2')">M</div>
+                                            <div class="state" id="state5"
+                                                [style.background-color]="stsDientes[diente.cod]?.state5"
+                                                (click)="changeStateColor(diente.cod, 'state5')">O</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                    class="line-protesis-total3">
+                                </div>
+                                <div *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                    class="line-protesis-total4">
+                                </div>
+                                <div class="col-md-12 d-flex justify-content-center p-0"
+                                    (click)="onSelectPrestacion(diente.cod)">
+                                    <div class="image-container" (click)="placeOverlayImage(diente.cod)">
+                                        <img src={{diente.img_sano}} alt="sano" class="background-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('endodoncia')"
+                                            src={{diente.img_endodoncia}} alt="endodoncia" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('endodonciap')"
+                                            src={{diente.img_endodonciap}} alt="endodonciap" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('ausente')"
+                                            style="filter: brightness(40%);" src={{diente.img_sano}} alt="ausente"
+                                            class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('piezacoronada')"
+                                            src={{diente.img_piezacoronada}} alt="piezacoronada" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('implante')"
+                                            src={{diente.img_implante}} alt="implante" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('lesion')"
+                                            src={{diente.img_lesion}} alt="lesion" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('pulpotomia')"
+                                            src={{diente.img_pulpotomia}} alt="pulpotomia" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('pulpotomiap')"
+                                            src={{diente.img_pulpotomiap}} alt="pulpotomiap" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('coronaacero')"
+                                            src={{diente.img_coronaacero}} alt="coronaacero" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('coronaacetato')"
+                                            src={{diente.img_coronaacetato}} alt="coronaacetato" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('fluoruro')"
+                                            src={{diente.img_fluoruro}} alt="fluoruro" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('pulpectomia')"
+                                            src={{diente.img_pulpectomia}} alt="pulpectomia" class="overlay-image">
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('pulpectomiap')"
+                                            src={{diente.img_pulpectomiap}} alt="pulpectomiap" class="overlay-image">
+
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('dientepilar')"
+                                            src={{diente.img_dientepilar}} alt="dientepilar" class="overlay-image">
+
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('extracion')"
+                                            src={{diente.img_extraccion}} alt="extracion" class="overlay-image">
+
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('protesisp')"
+                                            src={{diente.img_protesisp}} alt="protesisp" class="overlay-image">
+
+                                        <img *ngIf="stateOverlays[diente.cod]?.includes('protesist')"
+                                            src={{diente.img_sano}} alt="protesist" class="overlay-image">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 d-flex justify-content-center p-0">
+                                    <h3>{{diente.nom}}</h3>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="row text-center">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-dark w-100"
+                                    (click)="onSelectPrestacion('G4')">Grupo 4</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-dark w-100"
+                                    (click)="onSelectPrestacion('G5')">Grupo 5</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-dark w-100"
+                                    (click)="onSelectPrestacion('G6')">Grupo 6</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="row d-flex pl-2 pr-2">
+                        <div class="col-md-12">
+                            <!-- Table Version 1.1.0 -->
+                            <p-table [value]="listaPrestacionesPaciente">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 50px;">Área</th>
+                                        <th style="width: 150px;">Superficie</th>
+                                        <th>Prestación</th>
+                                        <th style="width: 100px;">Subtotal prestación</th>
+                                        <th style="width: 100px;">Descuento(%)</th>
+                                        <th style="width: 100px;">Total prestacion</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-p>
+                                    <tr>
+                                        <td>{{p.areaPres}}</td>
+                                        <td>
+                                            <p-multiSelect [options]="cities" formControlName="selectedCities"
+                                                defaultLabel="Seleccionar" optionLabel="name">
+                                            </p-multiSelect>
+                                        </td>
+                                        <td>{{p.nomPres}}</td>
+                                        <td>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i
+                                                            data-feather="dollar-sign"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="0.00"
+                                                    value={{p.valPres}} />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group input-group-merge">
+                                                <input type="text" class="form-control" placeholder="0" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ p.valPres | currency:'USD':'symbol':'1.2-2'
+                                            }}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <!-- Table Version 1.0.0 -->
+                            <!-- <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Área</th>
+                                            <th>Superficie</th>
+                                            <th>Prestación</th>
+                                            <th>Subtotal prestación</th>
+                                            <th>Descuento(%)</th>
+                                            <th>Total prestacion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="listaPrestacionesPaciente.length; else noRegistros">
+                                            <tr *ngFor="let p of listaPrestacionesPaciente | slice: (page-1) * itemsPerPage : page * itemsPerPage"
+                                                style="height: 50px;">
+                                                <td style="width: 50px;">{{p.areaPres}}</td>
+                                                <td style="width: 50px;">
+                                                    <p-multiSelect [options]="cities" formControlName="selectedCities"
+                                                        defaultLabel="Seleccionar" optionLabel="name">
+                                                    </p-multiSelect>
+                                                </td>
+                                                <td>{{p.nomPres}}</td>
+                                                <td style="width: 150px;">
+                                                    <div class="input-group input-group-merge">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    data-feather="dollar-sign"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="0.00"
+                                                            value={{p.valPres}} />
+                                                    </div>
+                                                </td>
+                                                <td style="width: 50px;">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" placeholder="0" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">%</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 50px;">{{ p.valPres | currency:'USD':'symbol':'1.2-2'
+                                                    }}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                                <ng-template #noRegistros>
+                                    <tr style="text-align: center;">
+                                        <td colspan="6">No hay registros actualmente</td>
+                                    </tr>
+                                </ng-template>
+                            </div> -->
+
+                            <!-- <ngb-pagination class="m-2 d-flex justify-content-end" [collectionSize]="totalItems"
+                                [(page)]="page" [pageSize]="itemsPerPage" [boundaryLinks]="true" [maxSize]="7"
+                                aria-label="Default pagination">
+                            </ngb-pagination> -->
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row d-flex justify-content-end ">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary w-100" (click)="enviarDatos()">Guardar</button>
+                            <!-- <button type="submit" class="btn btn-dark w-100">Guardar form</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- / Tratamientos -->

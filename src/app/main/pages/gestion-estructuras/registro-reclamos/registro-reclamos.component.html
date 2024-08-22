@@ -1,0 +1,217 @@
+<div class="content-wrapper">
+  <div class="content-body">
+
+      <!-- Basic Alerts start -->
+      <section id="home-page">
+
+        <div class="container">
+          <div class="row">
+
+            <div class="col"></div>
+            <div class="col-10">
+              
+              <hr style="color: black;" />
+
+              <h1>Reclamos por presuntos cobros indebidos</h1>
+
+              <div class="table-wrapper-scroll-y my-custom-scrollbar" ng-controller="mainController">
+                <table class="table table-striped table-bordered mb-0">
+                  <thead>
+                  <tr>
+                    <th scope="col">N° reclamo</th>
+                    <th scope="col">Codigo socio</th>
+                    <th scope="col">Fecha reclamo</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Fecha respuesta reclamo</th>
+                    <th scope="col">Monto total restituido</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Get value clicked in row -->
+                    <tr *ngFor="let reclamo of reclamos" (click)="onSelectUpdate(reclamo)"> 
+                      <td>{{ reclamo.id.numReclamo }}</td>
+                      <td>{{ reclamo.id.codSocio }}</td>
+                      <td>{{ reclamo.fecReclamo }}</td>
+                      <td>{{ reclamo.stsReclamo }}</td>
+                      <td>{{ reclamo.fecRespuestaReclamo }}</td>
+                      <td>{{ reclamo.valTotalRestituido }}</td>
+                      <td><button type="button" style="width: 100%;" class="btn btn-danger" (click)="eliminar(reclamo)" > <!-- Get all value in row -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                      </button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+
+            </div>
+            <div class="col"></div>
+          </div>
+
+          <div class="row">
+            <div class="col"></div>
+            <div class="col-11">
+
+              <!-- <button class="btn btn-success" style="margin-right: 10px;margin-left: 10px;" (click)="alertWithSuccess()">Alert with Success</button>  -->
+
+              <hr style="color: black;" />
+              <h2>Registro y actualizacion de informacion</h2>
+
+              <!-- Validacion de Formulario y obtencion de datos de inputs -->
+
+              <hr style="color: black;" />
+              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+                <div class="form-row">
+                  <!-- <div class="form-group col-md-1">
+                    <label>N° de Reclamo</label>
+                    <input type="number" formControlName="inputNumReclamo" [(ngModel)]="numReclamo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputNumReclamo.errors }" disabled/>
+                    <div *ngIf="submitted && f.inputNumReclamo.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputNumReclamo.errors.required">Numero de reclamo es requerido</div>
+                    </div>
+                  </div> -->
+
+                  <div class="form-group col-md-3">
+                    <label>Código socio</label>
+                    <input type="number" formControlName="inputCodSocio" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputCodSocio.errors }"/>
+                    <div *ngIf="submitted && f.inputCodSocio.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputCodSocio.errors.required">Codigo de socio es requerido</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <label>Canal de Reclamo</label>
+                    <select [(ngModel)]="seleccionadoCanalReclamo" formControlName="inputCanalRec" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputCanalRec.errors }">
+                      <option [value]="item.cod" *ngFor="let item of listaCanalReclamo">{{item.desc}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.inputCanalRec.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputCanalRec.errors.required">Canal de reclamo es requerido</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <label>Fecha reclamo</label>  
+                    <input type="date" formControlName="inputFecReclamo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputFecReclamo.errors }" />
+                    <div *ngIf="submitted && f.inputFecReclamo.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputFecReclamo.errors.required">Fecha reclamo es requerido</div>
+                    </div>                    
+                  </div>
+
+                  <div class="form-group col-md-2">
+                    <label>Tipo Transacción</label>
+                    <select [(ngModel)]="seleccionadoTipoTran" formControlName="inputTipoTransaccion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputTipoTransaccion.errors }">
+                      <option [value]="item.cod" *ngFor="let item of listaTipoReclamo">{{item.desc}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.inputTipoTransaccion.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputTipoTransaccion.errors.required">Tipo de transacción es requerido</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <!-- <div class="form-group col-md-3">
+                    <label>Concepto</label>
+                    <input type="text" formControlName="inputConcepto" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputConcepto.errors }"/>
+                    <div *ngIf="submitted && f.inputConcepto.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputConcepto.errors.required">Concepto es requerido</div>
+                    </div>
+                  </div> -->
+
+                  <div class="form-group col-md-6">
+                    <label>Tipo de concepto</label>
+                    <select [(ngModel)]="seleccionadoTipoConcepto" formControlName="inputTipoConcepto" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputTipoConcepto.errors }">
+                      <option [value]="item.cod" *ngFor="let item of listaTipoConcepto">{{item.desc}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.inputTipoConcepto.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputTipoConcepto.errors.required">Tipo concepto es requerido</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <label>Detalle de concepto</label>
+                    <select [(ngModel)]="seleccionadoDetConcepto" formControlName="inputDetConcepto" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputDetConcepto.errors }">
+                      <option [value]="item.cod" *ngFor="let item of listaDetConcepto">{{item.desc}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.inputDetConcepto.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputDetConcepto.errors.required">Detalle de concepto es requerido</div>
+                    </div>
+                  </div>
+
+                  
+
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label>Estado Reclamo</label>
+                    <select [(ngModel)]="seleccionadoEstadoRec" formControlName="inputEstadoReclamo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputEstadoReclamo.errors }">
+                      <option [value]="item.cod" *ngFor="let item of listaEstadoReclamo">{{item.desc}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.inputEstadoReclamo.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputEstadoReclamo.errors.required">Estado de reclamo es requerido</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-4">
+                    <label>Fecha respuesta reclamo</label>  
+                    <input type="date" formControlName="inputFecRespRec" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputFecRespRec.errors }" />
+                    <div *ngIf="submitted && f.inputFecRespRec.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputFecRespRec.errors.required">Fecha respuesta de reclamo es requerido</div>
+                    </div>                    
+                  </div>
+
+                  <div class="form-group col-md-4">
+                    <label>Tipo resolucion reclamo</label>
+                    <select [(ngModel)]="seleccionadoTipoResRec" formControlName="inputTipoResRec" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputTipoResRec.errors }">
+                      <option [value]="item.cod" *ngFor="let item of listaTipoResRec">{{item.desc}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.inputTipoResRec.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputTipoResRec.errors.required">Tipo resolución de reclamo es requerido</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label>Valor restituido</label>
+                    <input type="number" formControlName="inputValResti" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputValResti.errors }" placeholder="10000.00"/>
+                    <div *ngIf="submitted && f.inputValResti.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputValResti.errors.required">Valor restituido es requerido</div>
+                    </div>  
+                  </div>
+
+                  <div class="form-group col-md-4">
+                    <label>Valor interes restituido</label>
+                    <input type="number" formControlName="inputValIntRest" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputValIntRest.errors }" placeholder="10000.00"/>
+                    <div *ngIf="submitted && f.inputValIntRest.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputValIntRest.errors.required">Valor interes restiruido es requerido</div>
+                    </div>  
+                  </div>
+
+                  <div class="form-group col-md-4">
+                    <label>Valor total</label>
+                    <input type="number" formControlName="inputValTot" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputValTot.errors }" placeholder="10000.00"/>
+                    <div *ngIf="submitted && f.inputValTot.errors" class="invalid-feedback">
+                        <div *ngIf="f.inputValTot.errors.required">Valor total es requerido</div>
+                    </div>  
+                  </div>
+                </div>
+
+
+                <hr style="color: black;" />
+                <div class="form-group">
+                    <button class="btn btn-primary" style="width: 100%;">GUARDAR</button>
+                </div>
+              </form>
+
+            </div>
+            <div class="col"></div>
+          </div>
+        </div>
+       
+      </section>
+      <!-- Basic Alerts end -->
+  </div>
+</div>
+
+

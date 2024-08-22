@@ -1,0 +1,266 @@
+<div class="content-wrapper">
+  <div class="content-body">
+
+    <!-- Basic Alerts start -->
+    <section id="home-page">
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col"></div>
+          <div class="col-11">
+
+            <hr style="color: black;" />
+
+            <h1>Bienes en dacion de pago</h1>
+
+            <!-- <div class="row">
+                <div class="col-2">
+                  <input type="text" class="form-control" placeholder="Buscar num operacion" [(ngModel)]="filternumop" name="filternumop">
+                </div>
+                <div class="col-2">
+                  <input type="text" class="form-control" placeholder="Buscar identificacion" [(ngModel)]="filterid" name="filterid">
+                </div>
+                <div class="col-2">
+                  <input type="text" class="form-control" placeholder="Buscar tipo bien" [(ngModel)]="filtertipobien" name="filtertipobien">
+                </div>
+                <div class="col-2">
+                  <input type="text" class="form-control" placeholder="Buscar nombre" [(ngModel)]="filternomemisor" name="filternomemisor">
+                </div>
+                <div class="col-2">
+                  <input type="text" class="form-control" placeholder="Buscar emision" [(ngModel)]="filterfecemision" name="filterfecemision">
+                </div>
+                <div class="col-2">
+                  <input type="text" class="form-control" placeholder="Buscar valor" [(ngModel)]="filtervalor" name="filtervalor">
+                </div>
+              </div> -->
+
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+              <table class="table table-striped table-bordered mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">N° Operacion</th>
+                    <th scope="col">Identificacion</th>
+                    <th scope="col">Tipo Bien</th>
+                    <th scope="col">Nombre emisor</th>
+                    <th scope="col">Fecha emision</th>
+                    <th scope="col">Valor nominal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="dacionesPagos.length; else noRegistros">
+                    <tr
+                      *ngFor="let datos of dacionesPagos | filternumop: filternumop | filterid: filterid | filtertipobien: filtertipobien | filternomemisor: filternomemisor | filterfecemision: filterfecemision | filtervalor: filtervalor">
+                      <td>{{datos.numOperacion}}</td>
+                      <td>{{datos.idSujeto}}</td>
+                      <td>{{datos.codTipoBien.toString()}}</td>
+                      <td>{{datos.nombreEmisor}}</td>
+                      <td>{{datos.fecEmision}}</td>
+                      <td>{{datos.valNominal.toString()}}</td>
+
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+              <ng-template #noRegistros>
+                <tr style="text-align: center;">
+                  <td colspan="12">No hay registros actualmente</td>
+                </tr>
+              </ng-template>
+            </div>
+
+
+          </div>
+          <div class="col"></div>
+        </div>
+
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-11">
+
+            <!-- <button class="btn btn-success" style="margin-right: 10px;margin-left: 10px;" (click)="alertWithSuccess()">Alert with Success</button>  -->
+
+            <hr style="color: black;" />
+            <h2>Registro de bienes o títulos valores adjudicados o recibidos en dación en pago</h2>
+
+            <!-- Validacion de Formulario y obtencion de datos de inputs -->
+            <!-- <h3>NOTA: si tipo de bien es “350”, los campos: nombre del emisor, fecha de emisión, fecha de vencimiento y valor nominal, no deberán ser reportados. (NaN)</h3>
+              <h3>NOTA: si tipo de bien es “350”, Fecha de contabilización Debe ser mayor o igual a la fecha de emisión (fecEmision <= fecCOntabi <= fecCorte)</h3>
+              <h3>NOTA: El estado cambia al reportar, N primera vez, A segundo envio o E</h3> -->
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>Numero Operacion</label>
+                  <input type="text" formControlName="inputNumOp" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputNumOp.errors }" />
+                  <div *ngIf="submitted && f.inputNumOp.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputNumOp.errors.required">Numero de operacion es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Tipo identificacion</label>
+                  <select [(ngModel)]="seleccionadoCodId" formControlName="inputTipoId" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputTipoId.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaTipoId">{{item.nom}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputTipoId.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputTipoId.errors.required">Tipo de identificacion es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Numero de Identificacion</label>
+                  <input type="text" formControlName="inputNumId" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputNumId.errors }" />
+                  <div *ngIf="submitted && f.inputNumId.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputNumId.errors.required">Numero de identificación es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Código de bien titulo</label>
+                  <input type="text" formControlName="inputCodBien" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputCodBien.errors }" />
+                  <div *ngIf="submitted && f.inputCodBien.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputCodBien.errors.required">Código de bien titulo es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>Tipo bien</label>
+                  <select [(ngModel)]="seleccionadoTipoBien" formControlName="inputTipoBien" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputTipoBien.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaTipoBien">{{item.nom}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputTipoBien.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputTipoBien.errors.required">Tipo bien es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Nombre emisor</label>
+                  <input type="text" formControlName="inputNomEmisor" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputNomEmisor.errors }" />
+                  <div *ngIf="submitted && f.inputNomEmisor.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputNomEmisor.errors.required">Nombre emisor es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Fecha emisión</label>
+                  <input type="date" formControlName="inputFecEmision" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputFecEmision.errors }" />
+                  <div *ngIf="submitted && f.inputFecEmision.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputFecEmision.errors.required">Fecha emisión es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Fecha vancimiento</label>
+                  <input type="date" formControlName="inputFecVencimiento" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputFecVencimiento.errors }" />
+                  <div *ngIf="submitted && f.inputFecVencimiento.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputFecVencimiento.errors.required">Fecha vencimiento es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>Valor nominal</label>
+                  <input type="number" formControlName="inputValNominal" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputValNominal.errors }" />
+                  <div *ngIf="submitted && f.inputValNominal.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputValNominal.errors.required">Valor nominal es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Fecha contabilización</label>
+                  <input type="date" formControlName="inputFecCont" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputFecCont.errors }" />
+                  <div *ngIf="submitted && f.inputFecCont.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputFecCont.errors.required">Fecha contabilización es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Valor en libros a la fecha de registro </label>
+                  <input type="number" formControlName="inputValLibros" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputValLibros.errors }" />
+                  <div *ngIf="submitted && f.inputValLibros.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputValLibros.errors.required">Valor en libros es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Valor de último avalúo</label>
+                  <input type="number" formControlName="inputValUltAval" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputValUltAval.errors }" />
+                  <div *ngIf="submitted && f.inputValUltAval.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputValUltAval.errors.required">Valor de último avalúo es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>Valor de provisión constituida</label>
+                  <input type="number" formControlName="inputValProvCons" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputValProvCons.errors }" />
+                  <div *ngIf="submitted && f.inputValProvCons.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputValProvCons.errors.required">Valor de provisión constituida es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Fecha de realización</label>
+                  <input type="date" formControlName="inputFecRealiz" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputFecRealiz.errors }" />
+                  <div *ngIf="submitted && f.inputFecRealiz.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputFecRealiz.errors.required">Fecha de realización es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Valor de realización</label>
+                  <input type="number" formControlName="inputValReali" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputValReali.errors }" />
+                  <div *ngIf="submitted && f.inputValReali.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputValReali.errors.required">Valor de realización es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Estado del registro</label>
+                  <select [(ngModel)]="seleccionadoEstadoReg" formControlName="inputEstadoReg" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputEstadoReg.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaEstadoRegistro">{{item.nom}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputEstadoReg.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputEstadoReg.errors.required">Estado del registro es requerido</div>
+                  </div>
+                </div>
+
+              </div>
+
+
+              <hr style="color: black;" />
+              <div class="form-group">
+                <button class="btn btn-primary" style="width: 100%;">GUARDAR</button>
+              </div>
+            </form>
+
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+    </section>
+    <!-- Basic Alerts end -->
+  </div>
+</div>

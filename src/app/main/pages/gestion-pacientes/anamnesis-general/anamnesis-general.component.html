@@ -1,0 +1,152 @@
+<!-- Anamnesis general -->
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="formAnamnesisGeneral" (ngSubmit)="onSubmit()">
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label class="form-label" for="motCons">Motivo de consulta:</label>
+                            <textarea class="form-control" rows="2" formControlName="motCons"
+                                [ngClass]="{ 'is-invalid': submitted && f.motCons.errors }"></textarea>
+                            <div *ngIf="submitted && f.motCons.errors" class="invalid-feedback">
+                                <div *ngIf="f.motCons.errors.required">Nombres de paciente es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="antcMed">Antecedentes medicos:</label>
+                            <textarea class="form-control" rows="2" formControlName="antcMed"
+                                [ngClass]="{ 'is-invalid': submitted && f.antcMed.errors }"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Medicamentos:</label>
+                            <textarea class="form-control" rows="2" formControlName="medicam"
+                            [ngClass]="{ 'is-invalid': submitted && f.medicam.errors }"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Hábitos:</label>
+                            <textarea class="form-control" rows="2" formControlName="habitos"
+                            [ngClass]="{ 'is-invalid': submitted && f.habitos.errors }"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">Antecedentes familiares:</label>
+                            <textarea class="form-control" rows="2" formControlName="antFami"
+                            [ngClass]="{ 'is-invalid': submitted && f.antFami.errors }"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Peso (kgs):</label>
+                            <input type="number" class="form-control form-control-lg" formControlName="peso"
+                            [ngClass]="{ 'is-invalid': submitted && f.peso.errors }"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Talla (cms):</label>
+                            <input type="number" class="form-control form-control-lg" formControlName="talla"
+                            [ngClass]="{ 'is-invalid': submitted && f.talla.errors }"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">I.M.C:</label>
+                            <input type="number" class="form-control form-control-lg" formControlName="imc"
+                            [ngClass]="{ 'is-invalid': submitted && f.imc.errors }"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="numId">Enfermedades sistémicas</label>
+                            <textarea class="form-control" rows="2" ></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="numId">Alergias</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Último examen dental</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">¿Paciente embarazada?</label>
+                            <div class="d-flex pt-1 pb-1">
+                                <div class="custom-control custom-control-lg custom-radio">
+                                    <input type="radio" id="customRadio1" name="cumRadio1" class="custom-control-input"
+                                        checked />
+                                    <label class="custom-control-label" for="customRadio1">Si</label>
+                                </div>
+                                <div class="custom-control custom-radio ml-2">
+                                    <input type="radio" id="customRadio2" name="cumRadio1"
+                                        class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">¿Ha presentado problemas de Coagulación?</label>
+                            <div class="d-flex pt-1 pb-1">
+                                <div class="custom-control custom-control-lg custom-radio">
+                                    <input type="radio" id="customRadio3" name="cumRadio2" class="custom-control-input"
+                                        checked />
+                                    <label class="custom-control-label" for="customRadio3">Si</label>
+                                </div>
+                                <div class="custom-control custom-radio ml-2">
+                                    <input type="radio" id="customRadio4" name="cumRadio2"
+                                        class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio4">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">¿Ha presentado problemas con Anestégicos Locales?</label>
+                            <div class="d-flex pt-1 pb-1">
+                                <div class="custom-control custom-control-lg custom-radio">
+                                    <input type="radio" id="customRadio5" name="cumRadio3" class="custom-control-input"
+                                        checked />
+                                    <label class="custom-control-label" for="customRadio5">Si</label>
+                                </div>
+                                <div class="custom-control custom-radio ml-2">
+                                    <input type="radio" id="customRadio6" name="cumRadio3"
+                                        class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio6">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row d-flex justify-content-end ">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- / Anamnesis general -->

@@ -1,0 +1,62 @@
+<!-- Anamnesis general -->
+<div class="col-12">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <li ngbNavItem>
+            <a ngbNavLink style="font-size: 1.2rem;">Recetas</a>
+            <ng-template ngbNavContent>
+
+                <app-recetas></app-recetas>
+
+            </ng-template>
+        </li>
+
+        <li ngbNavItem>
+            <a ngbNavLink style="font-size: 1.2rem;">Interconsultas</a>
+            <ng-template ngbNavContent>
+
+                <app-interconsultas></app-interconsultas>
+
+            </ng-template>
+        </li>
+
+        <li ngbNavItem>
+            <a ngbNavLink style="font-size: 1.2rem;">Derivaciones</a>
+            <ng-template ngbNavContent>
+
+                <app-derivaciones></app-derivaciones>
+
+            </ng-template>
+        </li>
+
+        <li ngbNavItem>
+            <a ngbNavLink style="font-size: 1.2rem;">Documentos Clínicos</a>
+            <ng-template ngbNavContent>
+
+                <app-doc-clinicos></app-doc-clinicos>
+
+            </ng-template>
+        </li>
+
+        <li ngbNavItem>
+            <a ngbNavLink style="font-size: 1.2rem;">Laboratorio</a>
+            <ng-template ngbNavContent>
+
+                <app-laboratorio></app-laboratorio>
+
+            </ng-template>
+        </li>
+
+        <li ngbNavItem>
+            <a ngbNavLink style="font-size: 1.2rem;">Radiología</a>
+            <ng-template ngbNavContent>
+
+                <app-radiologia></app-radiologia>
+
+            </ng-template>
+        </li>
+
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
+
+<!-- / Anamnesis general -->

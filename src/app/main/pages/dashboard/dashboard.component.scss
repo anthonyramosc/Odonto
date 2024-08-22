@@ -1,0 +1,94 @@
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px;
+  }
+  
+  .header {
+    width: 91.5%;
+  }
+  
+  .table {
+    width: 91.5%;
+  }
+  
+  .calendar th, .calendar td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .calendar.month-view th {
+    background-color: #d3d3d3;
+  }
+  
+  .calendar.month-view td {
+    height: 100px;
+    cursor: pointer;
+  }
+  
+  .calendar.month-view td:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .calendar.week-view th {
+    background-color: #d3d3d3;
+  }
+  
+  .calendar.week-view td {
+    height: 15px;
+    cursor: pointer;
+  }
+  
+  .calendar.week-view td:hover {
+    background-color: #cfcfcf;
+  }
+  
+  .calendar.day-view th {
+    background-color: #d3d3d3;
+  }
+  
+  .calendar.day-view td {
+    height: 15px;
+    cursor: pointer;
+  }
+  
+  .calendar.day-view td:hover {
+    background-color: #bfbfbf;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .hour {
+    width: 5%;
+  }
+  
+  .modal-form {
+    max-height: 85%;
+    overflow-y: auto;
+  }
+  
+  .img {
+    width: 100%;
+    padding-top: 40px;
+  }
+  
+  .primero {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    width: 95%;
+    gap: 10px;
+  }
+  
+  .segundo {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+    width: 100%;
+  }

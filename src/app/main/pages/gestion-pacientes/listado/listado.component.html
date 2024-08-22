@@ -1,0 +1,82 @@
+<div class="content-wrapper mt-2">
+    <div class="content-body">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row d-flex pl-2 pr-2">
+                            <div class="col-md-3 d-flex align-items-center ">
+                                <button type="button" class="btn btn-primary"><i data-feather="user-plus"></i><span
+                                        class="ml-1" (click)="crearPaciente()">Nuevo paciente</span></button>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label" for="numId">Buscar paciente:</label>
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row d-flex pl-2 pr-2">
+                            <div class="col-md-12">
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Apellidos</th>
+                                                <th>Nombres</th>
+                                                <th>Identificación</th>
+                                                <th>E-mail</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngIf="listaPacientes.length; else noRegistros">
+                                                <!-- <tr *ngFor="let s of dataSocios"> -->
+                                                <tr *ngFor="let paciente of listaPacientes | slice: (page-1) * itemsPerPage : page * itemsPerPage"
+                                                    style="height: 50px;" (click)="verDetalle(paciente)">
+
+                                                    <td>{{paciente.apePaciente}}</td>
+                                                    <td>{{paciente.nomPaciente}}</td>
+                                                    <td>{{paciente.numIdPaciente}}</td>
+                                                    <td>{{paciente.mailPaciente}}</td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                    <ng-template #noRegistros>
+                                        <tr style="text-align: center;">
+                                            <td colspan="4">No hay registros actualmente</td>
+                                        </tr>
+                                    </ng-template>
+                                </div>
+
+                                <ngb-pagination class="m-2 d-flex justify-content-end" [collectionSize]="totalItems"
+                                    [(page)]="page" [pageSize]="itemsPerPage" [boundaryLinks]="true" [maxSize]="7"
+                                    aria-label="Default pagination">
+                                </ngb-pagination>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

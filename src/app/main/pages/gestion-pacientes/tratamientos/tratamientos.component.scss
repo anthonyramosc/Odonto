@@ -1,0 +1,185 @@
+label {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+//Estados de diente
+.circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.state {
+  width: 13px;
+  height: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  color: white;
+  font-size: .95rem;
+  text-align: center;
+  border-radius: 100%;
+}
+
+#state1 {
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#state2 {
+  top: 50%;
+  left: 90%;
+  transform: translateY(-50%) translateX(-100%);
+}
+
+#state3 {
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#state4 {
+  top: 50%;
+  left: 35%;
+  transform: translateY(-50%) translateX(-100%);
+}
+
+#state5 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+//Imagenes sobrepuestas
+.image-container {
+  position: relative;
+  width: 40px;
+  height: 84px;
+  cursor: pointer;
+}
+
+.image-container-menor {
+  position: relative;
+  width: 25px;
+  height: 52px;
+  cursor: pointer;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.overlay-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* Para que los clics pasen a través de esta imagen */
+}
+
+//Lineas divisoras horizontal y vertical
+.line-horizontal,
+.line-vertical {
+  position: absolute;
+  background-color: black;
+}
+
+.line-horizontal {
+  margin-left: 50px;
+  top: 50%;
+  left: 0;
+  width: 80%;
+  height: 1px;
+}
+
+.line-vertical {
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+}
+
+// LINEAS Estado de protesis total -- SUPERIOR
+.line-protesis-total1,
+.line-protesis-total2 {
+  position: relative;
+  background-color: aquamarine;
+}
+
+.line-protesis-total1 {
+  top: 45%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 99;
+}
+
+.line-protesis-total2 {
+  top: 48%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 99;
+}
+
+// LINEAS Estado de protesis total -- INFERIOR
+.line-protesis-total3,
+.line-protesis-total4 {
+  position: relative;
+  background-color: aquamarine;
+}
+
+.line-protesis-total3 {
+  top: 12%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 99;
+}
+
+.line-protesis-total4 {
+  top: 15%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 99;
+}
+
+//ngPrim Multiselect
+:host ::ng-deep .p-multiselect {
+  width: 100%;
+}
+:host ::ng-deep .p-multiselect-label-container {
+  white-space: normal; /* Permite que el texto se ajuste a múltiples líneas */
+  max-width: 100%; /* Asegura que el contenido no exceda el ancho del contenedor */
+}
+
+:host ::ng-deep .p-multiselect-label {
+  display: inline-block; /* Asegura que cada etiqueta tenga su propio espacio */
+  white-space: normal; /* Permite saltos de línea dentro de cada etiqueta */
+  word-wrap: break-word; /* Corta las palabras largas si es necesario */
+}

@@ -1,0 +1,91 @@
+<div class="content-wrapper">
+  <div class="content-body">
+
+      <!-- Basic Alerts start -->
+      <section id="home-page">
+
+        <div class="container">
+          <div class="row">
+
+            <div class="col"></div>
+            <div class="col-10">
+              
+              <hr>
+              <h1>RECLAMOS</h1><hr>
+              <h1>ESTRUCTURA DE RECLAMOS POR PRESUNTOS COBROS INDEBIDOS Y/O SERVICIOS NO SOLICITADOS - CI01</h1><hr>
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>Codigo de entidad</label>
+                  <input type="text" class="form-control" id="inputCodEntidad" value={{empresa.numRuc}} disabled>
+                </div>
+                <div class="form-group col-md-3">
+                  <label>Fecha inicial</label>
+                  <input type="date" class="form-control" id="inputFecDatos" [(ngModel)]="fechaDatos">
+                </div>
+                <div class="form-group col-md-3">
+                  <label>Fecha corte</label>
+                  <input type="date" class="form-control" id="inputFecDatos1" [(ngModel)]="fechaDatos1">
+                </div>
+                <div class="form-group col-md-3">
+                  <button class="btn btn-success" style="width: 100%; height: 100%;" (click)="alertWithSuccess()">Visualizar datos</button>
+                  <!-- <button type="submit"  style="width: 100%; height: 100%;" class="btn btn-warning">Previsualizar datos en tabla</button> -->
+                </div>
+              </div>
+
+
+              <hr>
+              <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-striped table-bordered mb-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">N° Reclamo</th>
+                      <th scope="col">Codigo Socio</th>
+                      <th scope="col">Canal Reclamo</th>
+                      <th scope="col">Fec. Reclamo</th>
+                      <th scope="col">Concepto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let obj of reclamos">
+                      <td>{{ obj.id.numReclamo }}</td>
+                      <td>{{ obj.id.codSocio }}</td>
+                      <td>{{ obj.canalReclamo }}</td>
+                      <td>{{ obj.fecReclamo }}</td>
+                      <td>{{ obj.concepto }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+
+            </div>
+            <div class="col"></div>
+            
+          </div>
+
+          <div class="row">
+            <div class="col"></div>
+            <div class="col-11">
+
+              <hr style="color: black;" />
+              <div class="form-row">
+                <div class="form-group col-md-2"></div>
+                
+                <div class="form-group col-md-8">
+                  <button type="button" style="width: 100%;" class="btn btn-primary" (click)="alertGenEstructuraI01()">Generar resporte SEPS</button>
+                </div>
+                
+                <div class="form-group col-md-2"></div>
+              </div>
+              
+            </div>
+            <div class="col"></div>
+          </div>
+        </div>
+       
+      </section>
+      <!-- Basic Alerts end -->
+  </div>
+</div>
+

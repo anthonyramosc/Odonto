@@ -1,0 +1,339 @@
+<div class="content-wrapper">
+  <div class="content-body">
+
+    <!-- Basic Alerts start -->
+    <section id="home-page">
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col"></div>
+          <div class="col-11">
+
+            <hr style="color: black;" />
+
+            <h1>Inversiónes o Fondos Disponibles</h1>
+
+            <!-- <div class="row">
+                <div class="col-3">
+                  <input type="text" class="form-control" placeholder="Buscar num deposito" [(ngModel)]="filternumdeposito" name="filternumdeposito">
+                </div>
+                <div class="col-3">
+                  <input type="text" class="form-control" placeholder="Buscar fecha deposito" [(ngModel)]="filterfecdep" name="filterfecdep">
+                </div>
+                <div class="col-3">
+                  <input type="text" class="form-control" placeholder="Buscar fecha compra" [(ngModel)]="filterfeccompra" name="filterfeccompra">
+                </div>
+                <div class="col-3">
+                  <input type="text" class="form-control" placeholder="Buscar monto" [(ngModel)]="filtermonto" name="filtermonto">
+                </div>
+              </div> -->
+
+            <div class="table-wrapper-scroll-y my-custom-scrollbar" ng-controller="mainController">
+              <table class="table table-striped table-bordered mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">N° Depósito</th>
+                    <th scope="col">Fecha depósito</th>
+                    <th scope="col">Fecha compra</th>
+                    <th scope="col">Valor nominal</th>
+                    <th scope="col">Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!--  -->
+                  <tr
+                    *ngFor="let inversion of inversiones | filtronumdep: filternumdeposito | filterfecdep: filterfecdep | filterfeccompra: filterfeccompra | filtermonto: filtermonto" >
+                    <td>{{ inversion.id.numDeposito }}</td>
+                    <td>{{ inversion.id.fecDeposito }}</td>
+                    <td>{{ inversion.id.fecCompra }}</td>
+                    <td>{{ inversion.valNominal.toString() }}</td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenu2"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="seleccionarItem(inversion)">
+                          Editar
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <button class="dropdown-item" type="button" style="width: 100%;" (click)="actualizarRegistro()">
+                            Actualizar
+                          </button>
+                          <button class="dropdown-item" type="button" style="width: 100%;" (click)="eliminarRegistro()">
+                            Eliminar
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
+          <div class="col"></div>
+        </div>
+
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-11">
+
+            <!-- <button class="btn btn-success" style="margin-right: 10px;margin-left: 10px;" (click)="alertWithSuccess()">Alert with Success</button>  -->
+
+            <hr style="color: black;" />
+            <h2>Registro de inversión</h2>
+            <!-- Validacion de Formulario y obtencion de datos de inputs -->
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+              <div class="form-row">
+                <div class="form-group col-md-2">
+                  <label>Numero de Depósito</label>
+                  <input type="text" formControlName="inputNumDep" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputNumDep.errors }" />
+                  <div *ngIf="submitted && f.inputNumDep.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputNumDep.errors.required">Número de Depósito es requerido</div>
+                  </div>
+                </div>
+                <div class="form-group col-md-10">
+                  <label>Nombre de Institución</label>
+                  <select [(ngModel)]="seleccionadoBanco" formControlName="inputNomInstit" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputNomInstit.errors }">
+                    <option [value]="item.codBanco" *ngFor="let item of bancos">{{item.nomBanco}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputNomInstit.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputNomInstit.errors.required">Institucion es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <hr style="color: black;" />
+              <!-- <h4>Portafolio de inversiones y fondos disponibles</h4>                 -->
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>Fecha emisión</label>
+                  <input type="date" formControlName="inputFecEmis" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputFecEmis.errors }" />
+                  <div *ngIf="submitted && f.inputFecEmis.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputFecEmis.errors.required">Fecha emision es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Fecha compra</label>
+                  <input type="date" formControlName="inputFecCompra" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputFecCompra.errors }" />
+                  <div *ngIf="submitted && f.inputFecCompra.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputFecCompra.errors.required">Fecha compra es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Tipo de Instrumento</label>
+                  <select [(ngModel)]="seleccionadoTipoInstr" formControlName="inputTipInstr" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputTipInstr.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaTipoInstr">{{item.desc}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputTipInstr.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputTipInstr.errors.required">Tipo instrumento es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Pais</label>
+                  <select [(ngModel)]="seleccionadoPais" formControlName="inputPais" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputPais.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaPais">{{item.desc}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputPais.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputPais.errors.required">Pais es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label>Valor nominal</label>
+                  <input type="number" formControlName="inputValNominal" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputValNominal.errors }" />
+                  <div *ngIf="submitted && f.inputValNominal.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputValNominal.errors.required">Tipo instrumento es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>Valor compra</label>
+                  <input type="number" formControlName="inputValCompra" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputValCompra.errors }" />
+                  <div *ngIf="submitted && f.inputValCompra.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputValCompra.errors.required">Tipo instrumento es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>Periodo pago</label>
+                  <input type="number" formControlName="inputPerPago" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputPerPago.errors }" />
+                  <div *ngIf="submitted && f.inputPerPago.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputPerPago.errors.required">Tipo instrumento es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <hr style="color: black;" />
+              <!-- <h4>Saldos de inversiones y fondos disponibles</h4> -->
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>Fecha vencimiento</label>
+                  <input type="date" formControlName="inputFecVencimiento" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputFecVencimiento.errors }" />
+                  <div *ngIf="submitted && f.inputFecVencimiento.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputFecVencimiento.errors.required">Fecha vencimiento es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Calificacion riesgo</label>
+                  <select [(ngModel)]="seleccionadoCalifRiesgo" formControlName="inputCalificacionRies"
+                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputCalificacionRies.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaCalfRiesgo">{{item.desc}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputCalificacionRies.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputCalificacionRies.errors.required">Calificacion riesgo es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Calificadora riesgo</label>
+                  <select [(ngModel)]="seleccionadoCalifadoraRiesgo" formControlName="inputCalificadoraRies"
+                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputCalificadoraRies.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaCalficadoraRiesgo">{{item.desc}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputCalificadoraRies.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputCalificadoraRies.errors.required">Calificadora riesgo es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Fecha última calificacion</label>
+                  <input type="date" formControlName="inputFecUltCalif" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputFecUltCalif.errors }" />
+                  <div *ngIf="submitted && f.inputFecUltCalif.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputFecUltCalif.errors.required">Fecha ultima calificacion es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label>Valor libros</label>
+                  <input type="number" formControlName="inputValLibros" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputValLibros.errors }" />
+                  <div *ngIf="submitted && f.inputValLibros.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputValLibros.errors.required">Valor libros es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>Cuenta contable</label>
+                  <input type="text" formControlName="inputCuentContable" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputCuentContable.errors }" />
+                  <div *ngIf="submitted && f.inputCuentContable.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputCuentContable.errors.required">Cuenta contable es requerido</div>
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-4">
+                  <label>Estado título</label>
+                  <select [(ngModel)]="seleccionadoEstadoTitulo" formControlName="inputEstadoTitulo"
+                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputEstadoTitulo.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaEstadoTirulo">{{item.desc}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputEstadoTitulo.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputEstadoTitulo.errors.required">Estado titulo es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label>Interés (%)</label>
+                  <input type="number" formControlName="inputInteres" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputInteres.errors }" />
+                  <div *ngIf="submitted && f.inputInteres.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputInteres.errors.required">Cuenta contable es requerido</div>
+                  </div>
+
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Interés generado</label>
+                  <input type="number" formControlName="inputInteresGen" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputInteresGen.errors }" />
+                  <div *ngIf="submitted && f.inputInteresGen.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputInteresGen.errors.required">Cuenta contable es requerido</div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Calificación riesgo normativa</label>
+                  <select [(ngModel)]="seleccionadoCalifRiesgNormativa" formControlName="inputCalifRiesgNormativa"
+                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inputCalifRiesgNormativa.errors }">
+                    <option [value]="item.cod" *ngFor="let item of listaCalifRiesgoNormativa">{{item.desc}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.inputCalifRiesgNormativa.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputCalifRiesgNormativa.errors.required">Califiacion riesgo normativa es requerido
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label>Provision constituida</label>
+                  <input type="number" formControlName="inputProvConst" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.inputProvConst.errors }" />
+                  <div *ngIf="submitted && f.inputProvConst.errors" class="invalid-feedback">
+                    <div *ngIf="f.inputProvConst.errors.required">Cuenta contable es requerido</div>
+                  </div>
+                </div>
+              </div>
+
+              <hr style="color: black;" />
+              <div class="form-group">
+                <button class="btn btn-primary" style="width: 100%;">GUARDAR</button>
+              </div>
+            </form>
+
+
+
+
+            <!-- <form>
+
+                <hr style="color: black;" />
+                <div class="form-row">
+                  <div class="form-group col-md-2"></div>
+                  <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-secondary">Limpiar</button>
+                  </div>
+                  <div class="form-group col-md-2"></div>
+                </div>
+
+              </form> -->
+
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+
+    </section>
+    <!-- Basic Alerts end -->
+  </div>
+</div>

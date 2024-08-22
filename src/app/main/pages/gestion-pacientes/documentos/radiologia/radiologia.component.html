@@ -1,0 +1,145 @@
+<!-- Interconsultas -->
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <form>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <h3>Órdenes de Radiografías</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label col-form-label-lg">Sucursal</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control form-control-lg" value="ODONTO CENTER PEREZ" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label col-form-label-lg">Centro Radiológico</label>
+                            <div class="col-sm-8">
+                                <select class="form-control form-control-lg form-select">
+                                    <option value="1">Centro XYZ SA</option>
+                                    <option value="2">CLINICA 2</option>
+                                    <option value="3">CLINICA 3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Exámenes Digitales 2D</h5>
+                                <div class="form-group m-1" *ngFor="let item of ed2d">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="{{item.id}}" />
+                                        <label class="custom-control-label" for="{{item.id}}">{{item.nom}}</label>
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Tomografía Computarizada Cone Beam</h5>
+                                <div class="form-group m-1" *ngFor="let item of tccb">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="{{item.id}}" />
+                                        <label class="custom-control-label" for="{{item.id}}">{{item.nom}}</label>
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Análisis Cefalométrico</h5>
+                                <div class="form-group m-1" *ngFor="let item of ac">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="{{item.id}}" />
+                                        <label class="custom-control-label" for="{{item.id}}">{{item.nom}}</label>
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Registros</h5>
+                                <div class="form-group m-1" *ngFor="let item of reg">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="{{item.id}}" />
+                                        <label class="custom-control-label" for="{{item.id}}">{{item.nom}}</label>
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Detalles</h5>
+                                <div class="col d-flex">
+                                    <div class="form-group m-1">
+                                        <div class="custom-control custom-checkbox ">
+                                            <input type="checkbox" class="custom-control-input" id="customCheckCD" />
+                                            <label class="custom-control-label" for="customCheckCD">CD</label>
+                                        </div>                          
+                                    </div>
+                                    <div class="form-group m-1">
+                                        <div class="custom-control custom-checkbox ">
+                                            <input type="checkbox" class="custom-control-input" id="customCheckMail" />
+                                            <label class="custom-control-label" for="customCheckMail">Correo electrónico</label>
+                                        </div>                           
+                                    </div>
+                                    <div class="form-group m-1">
+                                        <div class="custom-control custom-checkbox ">
+                                            <input type="checkbox" class="custom-control-input" id="customCheckImpreso" />
+                                            <label class="custom-control-label" for="customCheckImpreso">Impreso</label>
+                                        </div>                           
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Diagnóstico y observaciones</label>
+                                        <textarea class="form-control form-control-lg" rows="3"
+                                            placeholder="Observaciones"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row d-flex justify-content-end ">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- / Interconsultas -->

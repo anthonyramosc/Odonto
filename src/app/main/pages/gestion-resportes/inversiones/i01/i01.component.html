@@ -1,0 +1,129 @@
+<div class="content-wrapper mt-2">
+  <div class="content-body">
+
+    <!-- Basic Alerts start -->
+    <section id="home-page">
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title"> Portafolio de inversiones y fondos disponibles (I01)</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row d-flex p-2">
+                <div class="col-md-6 d-flex" style="gap: 20px;">
+                  <div class="form-group">
+                    <label>RUC de entidad</label>
+                    <input type="text" class="form-control" id="inputCodEntidad" value={{numRuc}} disabled>
+                  </div>
+                  <div class="form-group">
+                    <label>Fecha de inicio</label>
+                    <input type="date" class="form-control" id="inputFecDatos" [(ngModel)]="fechaDatosI">
+                  </div>
+                  <div class="form-group">
+                    <label>Fecha corte</label>
+                    <input type="date" class="form-control" id="inputFecDatos" [(ngModel)]="fechaDatosF">
+                  </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end" style="gap: 20px;">
+                  <div class="form-group mt-1">
+                    <!-- <button class="btn btn-success" style="width: 100%; height: 100%;" (click)="alertWithSuccess()">Visualizar datos</button> -->
+                    <button class="btn btn-success" (click)="alertWithSuccess()">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 32 32">
+                        <circle cx="22" cy="24" r="2" fill="#ffffff" />
+                        <path fill="#ffffff"
+                          d="M29.777 23.479A8.64 8.64 0 0 0 22 18a8.64 8.64 0 0 0-7.777 5.479L14 24l.223.521A8.64 8.64 0 0 0 22 30a8.64 8.64 0 0 0 7.777-5.479L30 24zM22 28a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4zM7 17h5v2H7zm0-5h12v2H7zm0-5h12v2H7z" />
+                        <path fill="#ffffff"
+                          d="M22 2H4a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h8v-2H4V4h18v11h2V4a2.006 2.006 0 0 0-2-2Z" />
+                      </svg>
+                      Generar información</button>
+                    <!-- <button type="submit"  style="width: 100%; height: 100%;" class="btn btn-warning">Previsualizar datos en tabla</button> -->
+                  </div>
+                  <div class="form-group mt-1">
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24">
+                          <path fill="#ffffff"
+                            d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11l-5 5Zm-6 4q-.825 0-1.413-.588T4 18v-3h2v3h12v-3h2v3q0 .825-.588 1.413T18 20H6Z" />
+                        </svg>
+                        Descargas
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <!-- <button class="dropdown-item" type="button" style="width: 100%;" (click)="crearTXT()">
+                                            Archivo TXT
+                                        </button> -->
+                        <button class="dropdown-item" type="button" style="width: 100%;"
+                          (click)="alertGenEstructuraI01()">
+                          Archivo ZIP
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-row pr-2 pl-2">
+                <div class="form-group col-md-12">
+                  <!-- <div class="table-wrapper-scroll-y my-custom-scrollbar"> -->
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">N° Depósito</th>
+                          <th scope="col">Institucion</th>
+                          <th scope="col">Fecha depósito</th>
+                          <th scope="col">Fecha compra</th>
+                          <th scope="col">Valor nominal</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="inversiones.length; else noRegistros">
+                          <!-- <tr *ngFor="let s of dataSocios"> -->
+                          <tr *ngFor="let i of inversiones | slice: (page-1) * itemsPerPage : page * itemsPerPage">
+                            <td>{{ i.id.numDeposito }}</td>
+                            <td>{{ getNombreUsuarioPorId(i.id.codBanco) }}</td>
+                            <td>{{ i.id.fecDeposito }}</td>
+                            <td>{{ i.id.fecCompra }}</td>
+                            <td>{{ i.valNominal | number: '.2-2'}}</td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                    <ng-template #noRegistros>
+                      <tr style="text-align: center;">
+                        <td colspan="12">No hay registros actualmente</td>
+                      </tr>
+                    </ng-template>
+                  </div>
+
+                  <ngb-pagination class="m-2" 
+                  [collectionSize]="totalItems" 
+                  [(page)]="page" 
+                  [pageSize]="itemsPerPage"
+                    [boundaryLinks]="true" [maxSize]="7" aria-label="Default pagination">
+                  </ngb-pagination>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- Basic Alerts end -->
+  </div>
+</div>

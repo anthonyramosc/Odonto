@@ -1,0 +1,307 @@
+<div class="content-wrapper mt-2">
+  <div class="content-body">
+
+    <!-- Basic Alerts start -->
+    <section id="home-page">
+
+      <!-- <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Gestión de Pacientes</h4>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+
+              <!-- DATOS PACIENTE -->
+              <div class="row d-flex pl-2 pr-2">
+                <div class="col-12">
+
+                  <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                    <li ngbNavItem>
+                      <a ngbNavLink style="font-size: 1.2rem;">Datos personales</a>
+                      <ng-template ngbNavContent>
+
+                        <!-- Datos personales -->
+                        <div class="col-12">
+                          <div class="card">
+                            <div class="card-body">
+                              <form [formGroup]="formDatosPaciente" (ngSubmit)="onSubmit()">
+                                <div class="row">
+                                  <div class="col-sm-12 col-md-3 d-flex justify-content-center align-items-center ">
+                                    <div>
+                                      <img class="img-paciente" src="https://innovation.com.mx/assets/images/avatar.png"
+                                        alt="">
+                                    </div>
+
+                                  </div>
+                                  <div class="col-sm-12 col-md-5">
+                                    <div class="form-group">
+                                      <label class="form-label" for="nom">Nombres:</label>
+                                      <input type="text" class="form-control form-control-lg" formControlName="nomP"
+                                        [ngClass]="{ 'is-invalid': submitted && f.nomP.errors }" />
+                                      <div *ngIf="submitted && f.nomP.errors" class="invalid-feedback">
+                                        <div *ngIf="f.nomP.errors.required">Nombres de paciente es requerido</div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label" for="ape">Apellidos:</label>
+                                      <input type="text" class="form-control form-control-lg" formControlName="apeP"
+                                        [ngClass]="{ 'is-invalid': submitted && f.apeP.errors }" />
+                                      <div *ngIf="submitted && f.apeP.errors" class="invalid-feedback">
+                                        <div *ngIf="f.apeP.errors.required">Apellidos de paciente es requerido</div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label" for="numid">Identififcación:</label>
+                                      <input type="text" class="form-control form-control-lg" formControlName="numIdP"
+                                        [ngClass]="{ 'is-invalid': submitted && f.numIdP.errors }" />
+                                      <div *ngIf="submitted && f.numIdP.errors" class="invalid-feedback">
+                                        <div *ngIf="f.numIdP.errors.required">Identificación de paciente es requerido
+                                        </div>
+                                      </div>
+                                      <div *ngIf="submitted && f.numIdP.errors" class="invalid-feedback">
+                                        <div *ngIf="f.numIdP.errors.cedulaExiste">Cédula ya existe</div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label" for="email">Correo electrónico:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                  </div>
+
+                                  <div class="col-sm-12 col-md-4">
+                                    <h4>En caso de emergencia</h4>
+                                    <div class="form-group">
+                                      <label class="form-label" for="nome">Nombres:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label" for="telfe">Teléfono/celular:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label" for="dire">Dirección:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                                <div class="row">
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="fecn">Fecha de nacimiento:</label>
+                                      <input type="date" class="form-control form-control-lg" />
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label" for="nac">Nacionalidad:</label>
+                                      <select class="form-control form-control-lg form-select"
+                                        aria-label="Default select example">
+                                        <option value="1">Ecuador</option>
+                                        <option value="2">Otro</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="gen">Género:</label>
+                                      <div class="d-flex pt-1 pb-1">
+                                        <div class="custom-control custom-control-lg custom-radio">
+                                          <input type="radio" id="customRadio1" name="customRadio"
+                                            class="custom-control-input" checked />
+                                          <label class="custom-control-label" for="customRadio1">Masculino</label>
+                                        </div>
+                                        <div class="custom-control custom-radio ml-2">
+                                          <input type="radio" id="customRadio2" name="customRadio"
+                                            class="custom-control-input" />
+                                          <label class="custom-control-label" for="customRadio2">Femenino</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label" for="ciudad">Ciudad:</label>
+                                      <select class="form-control form-control-lg form-select"
+                                        aria-label="Default select example">
+                                        <option value="1">Cuenca</option>
+                                        <option value="2">Otro</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="civil">Estado civil:</label>
+                                      <select class="form-control form-control-lg form-select"
+                                        aria-label="Default select example">
+                                        <option value="1">Soltero/a</option>
+                                        <option value="2">Casado/a</option>
+                                        <option value="3">Divorciado/a</option>
+                                        <option value="4">Otro</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="tipsangre">Tipo de sangre:</label>
+                                      <select class="form-control form-control-lg form-select"
+                                        aria-label="Default select example">
+                                        <option value="1">A+</option>
+                                        <option value="2">A-</option>
+                                        <option value="3">B+</option>
+                                        <option value="4">B-</option>
+                                        <option value="5">AB+</option>
+                                        <option value="6">AB-</option>
+                                        <option value="7">O+</option>
+                                        <option value="8">O-</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="ref">¿Cómo se contactó?</label>
+                                      <select class="form-control form-control-lg form-select"
+                                        aria-label="Default select example">
+                                        <option value="1">Redes sociales</option>
+                                        <option value="2">Referencia</option>
+                                        <option value="3">Búsqueda por internet</option>
+                                        <option value="4">Propiamente</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="telf">Teléfono/celular:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="dir">Dirección de domicilio:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label" for="refd">Referencias:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col">
+                                    <hr>
+                                    <h4>Datos médico de cabecera</h4>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label">Nombre de médico:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                      <label class="form-label">Teléfono/celular:</label>
+                                      <input type="text" class="form-control form-control-lg" />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row d-flex justify-content-end ">
+                                  <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                                  </div>
+                                  <!-- <div class="col-md-2">
+                                    <button type="reset" class="btn btn-secondary w-100">Limpiar</button>
+                                  </div> -->
+                                </div>
+                              </form>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- / Datos personales -->
+
+                      </ng-template>
+                    </li>
+
+                    <li ngbNavItem>
+                      <a ngbNavLink style="font-size: 1.2rem;">Anamnesis general</a>
+                      <ng-template ngbNavContent>
+
+                        <app-anamnesis-general></app-anamnesis-general>
+
+                      </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                      <a href="javascript:void(0)" ngbNavLink style="font-size: 1.2rem;">Examen odontológico</a>
+                      <ng-template ngbNavContent>
+
+                        <app-examen-odontologico></app-examen-odontologico>
+
+                      </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                      <a href="javascript:void(0)" ngbNavLink style="font-size: 1.2rem;">Tratamiento</a>
+                      <ng-template ngbNavContent>
+
+                        <app-tratamientos></app-tratamientos>
+
+                      </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                      <a href="javascript:void(0)" ngbNavLink style="font-size: 1.2rem;">Imágenes</a>
+                      <ng-template ngbNavContent>
+
+                        <app-imagenes></app-imagenes>
+
+                      </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                      <a href="javascript:void(0)" ngbNavLink style="font-size: 1.2rem;">Informes</a>
+                      <ng-template ngbNavContent>
+
+                        <app-informes></app-informes>
+
+                      </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                      <a href="javascript:void(0)" ngbNavLink style="font-size: 1.2rem;">Documentos</a>
+                      <ng-template ngbNavContent>
+
+                        <app-documentos></app-documentos>
+
+                      </ng-template>
+                    </li>
+
+                  </ul>
+                  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- Basic Alerts end -->
+  </div>
+</div>

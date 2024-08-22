@@ -1,0 +1,138 @@
+<div class="content-wrapper mt-2">
+    <div class="content-body">
+      <section id="home-page">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Sistema de Gestión Odontológico </h4>
+              </div>
+              <div class="card-body pb-1">
+                  <div class="calendar">
+                    <div id="monthlyView" class="calendar month-view" [class.d-none]="!isMonthlyViewVisible">
+                      <div class="header d-flex justify-content-between align-items-center bg-light p-3">
+                        <div class="buttons">
+                          <button class="btn btn-outline-primary" (click)="showMonthlyView()">M</button>
+                          <button class="btn btn-outline-primary" (click)="showWeeklyView()">S</button>
+                          <button class="btn btn-outline-primary" (click)="showDailyView()">D</button>
+                          <button class="btn btn-outline-primary" (click)="goToToday()">Hoy</button>
+                        </div>
+                        <div class="month-navigation d-flex align-items-center">
+                          <button class="btn btn-outline-secondary" (click)="prevMonth()">&#9664;</button>
+                          <span class="month mx-2">{{ monthNames[currentMonth] }} {{ currentYear }}</span>
+                          <button class="btn btn-outline-secondary" (click)="nextMonth()">&#9654;</button>
+                        </div>
+                      </div>
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th *ngFor="let day of daysInWeek">{{ day }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let week of weeksInMonth">
+                            <td *ngFor="let day of week" [class.today]="isToday(day.day)" (click)="openModal()">
+                              <span *ngIf="day.day">{{ day.day }}</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                
+                    <div id="weeklyView" class="calendar week-view" [class.d-none]="!isWeeklyViewVisible">
+                      <div class="header d-flex justify-content-between align-items-center bg-light p-3">
+                        <div class="buttons">
+                          <button class="btn btn-outline-primary" (click)="showMonthlyView()">M</button>
+                          <button class="btn btn-outline-primary" (click)="showWeeklyView()">S</button>
+                          <button class="btn btn-outline-primary" (click)="showDailyView()">D</button>
+                          <button class="btn btn-outline-primary" (click)="goToToday()">Hoy</button>
+                        </div>
+                        <div class="week-navigation d-flex align-items-center">
+                          <button class="btn btn-outline-secondary" (click)="prevWeek()">&#9664;</button>
+                          <span class="week mx-2">{{ currentWeekStart | date: 'dd/MM/yyyy' }} - {{ currentWeek[6] | date: 'dd/MM/yyyy' }}</span>
+                          <button class="btn btn-outline-secondary" (click)="nextWeek()">&#9654;</button>
+                        </div>
+                      </div>
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>/</th>
+                            <th *ngFor="let day of currentWeek">{{ day | date: 'EEE' }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let hour of hoursInDay">
+                            <td class="hour">{{ hour }}</td>
+                            <td *ngFor="let day of currentWeek" (click)="openModal()"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                
+                    <div id="dailyView" class="calendar day-view" [class.d-none]="!isDailyViewVisible">
+                      <div class="header d-flex justify-content-between align-items-center bg-light p-3">
+                        <div class="buttons">
+                          <button class="btn btn-outline-primary" (click)="showMonthlyView()">M</button>
+                          <button class="btn btn-outline-primary" (click)="showWeeklyView()">S</button>
+                          <button class="btn btn-outline-primary" (click)="showDailyView()">D</button>
+                          <button class="btn btn-outline-primary" (click)="goToToday()">Hoy</button>
+                        </div>
+                        <div class="day-navigation d-flex align-items-center">
+                          <button class="btn btn-outline-secondary" (click)="prevDay()">&#9664;</button>
+                          <span class="day mx-2">{{ currentDay | date: 'fullDate' }}</span>
+                          <button class="btn btn-outline-secondary" (click)="nextDay()">&#9654;</button>
+                        </div>
+                      </div>
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th class="hour">/</th>
+                            <th class="text-center">{{ currentDay | date: 'EEEE' }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let hour of hoursInDay">
+                            <td class="hour">{{ hour }}</td>
+                            <td (click)="openModal()"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                <div>
+                  <div class="modal-form" *ngIf="isModalOpen" >
+                  <div class="modal-header">
+                    <h5>Vertical</h5>
+                  </div>
+                    <div class="modal-body">
+                    
+                      <div class="form-group">
+                        <input class="form-control" id="fullname" type="text" pInputText placeholder="Firstname"/>
+                      </div>
+                      <div class="form-group">
+                        <input class="form-control" id="email" type="email" pInputText  placeholder="Email"/>
+                      </div>
+                  
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+                      <button class="btn btn-primary">Imprimir</button>
+                      <button class="btn btn-success"  (click)="saveEvent()">Guardar</button>
+                    </div>
+                  </div>
+
+                  
+                </div>
+
+                
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  
