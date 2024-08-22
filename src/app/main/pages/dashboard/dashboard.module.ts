@@ -6,7 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreCommonModule } from '@core/common.module';
 
-// routing
 const routes: Routes = [
   {
     path: '',
