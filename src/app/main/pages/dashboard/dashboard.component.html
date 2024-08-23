@@ -31,7 +31,7 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let week of weeksInMonth">
-                            <td *ngFor="let day of week" [class.today]="isToday(day.day)" (click)="openModal()">
+                            <td *ngFor="let day of week" (click)="day.day && openModal()">
                               <span *ngIf="day.day">{{ day.day }}</span>
                             </td>
                           </tr>
@@ -63,7 +63,8 @@
                         <tbody>
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour">{{ hour }}</td>
-                            <td *ngFor="let day of currentWeek" (click)="openModal()"></td>
+                            <td *ngFor="let day of currentWeek" (click)="openModal()">
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -101,37 +102,129 @@
                   </div>
 
 
-                  <div class="modal-overlay " *ngIf="isModalOpen">
-                    <div class="modal-form">
-                      <div class=" modal-body">
-                
-                          <div class="row  gap : 10px">
 
-                            <div class=" col-sm-12 col-md-3 d-flex justify-content-center align-items-center ">
-                              <div>
-                                <img class="img-paciente" src="https://innovation.com.mx/assets/images/avatar.png"
-                                  alt="">
-                              </div>
-                
-                            </div>
-                            <div>
-                              <div class="form-group">
-                                <input class="form-control" id="fullname" type="text" pInputText placeholder="Fullname" />
-                              </div>
-                              <div class="form-group">
-                                
-                                <input  class="form-control" id="email" type="email" pInputText placeholder="Email" />
-                                
-                              </div>
-                              <div class="form-group">
-                                <input type="text" id="nit" class="form-control" pInputText placeholder="NIT" />
-                              </div>
-                            </div>
-                          </div>
-                         
-                      </div>
-                    </div>
+<div class="modal-overlay" *ngIf="isModalOpen">
+
+  <div class="modal-content" style="max-width: 600px; background-color: #fff; border-radius: 8px; overflow: hidden;">
+
+    <div class="modal-header bg-primary text-white">
+      <h5 class="modal-title  text-white">Informacion Paciente </h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    
+
+    <div class="modal-body">
+      <div class="row align-items-center">
+        
+        <div class="col d-flex justify-content-center">
+        <div class="col-sm-12 col-md-4 d-flex justify-content-center">
+          <img class="img-fluid rounded-circle" src="https://innovation.com.mx/assets/images/avatar.png" alt="Patient Image" style="max-width: 120px;">
+        </div>
+        </div>
+       
+
+        
+        <div class="col-sm-12 col-md-8 ">
+          <div class="form-group">
+            <input class="form-control" id="fullname" type="text" placeholder="Nombres" />
+          </div>
+          <div class="form-group">
+            <input class="form-control" id="lastname" type="text" placeholder="Identificación" />
+          </div>
+          <div class="form-group">
+            <input class="form-control" id="identification" type="text" placeholder="Telefono de Referencia" />
+          </div>
+          <div class="form-group">
+            <input class="form-control" id="email" type="email" placeholder="Correo electrónico" />
+          </div>
+        </div>
+
+
+<div class="col  grid gap-3">
+        <div class="container">
+          <div class="row">
+
+              <div class="col-md-15">
+
+                  <div class="form-group">
+                      <label for="doctor">Profesional:</label>
+                      <select class="form-control" id="doctor">
+                          <option>Dr. Xavier Guaman</option>
+
+                      </select>
+                  </div>
+  
+
+
+                  <div class="form-group">
+                    <label for="birthdate">Fecha:</label>
+                    <input class="form-control" id="birthdate" type="date" />
                 </div>
+                
+  
+
+                 <div class="form-group">
+    <label for="horaConsulta">Hora:</label>
+    <div class="d-flex">
+        <input class="form-control me-2" id="hora" type="text" placeholder="Hora" style="width: 30%;" />
+        <input class="form-control me-2" id="minuto" type="text" placeholder="Minuto" style="width: 30%;" />
+        <select class="form-control" id="ampm" style="width: 35%;">
+            <option>am</option>
+            <option>pm</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+  <label for="referral">Canal de Referido</label>
+  <select id="referral" class="form-control">
+    <option>- Seleccione Canal de Referido</option>
+    <option>- (+) Agregar canal preferido</option>
+  </select>
+</div>
+
+                  
+              </div>
+  </div>
+           </div>   
+           </div>
+              <div class="col-md-6">
+                
+                <div class="form-group">
+                      <label for="motivoConsulta">Motivo de Consulta:</label>
+                      <select class="form-control" id="motivoConsulta">
+                          <option>Seleccione Motivo de Consulta</option>
+                          <option>- Control de tratamiento </option>
+                          <option>- Limpieza</option>
+                          <option>- Primera Consulta</option>
+                          <option>- Urgencia</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="observaciones">Observaciones:</label>
+                      <textarea class="form-control" id="observaciones" rows="7" placeholder="Observaciones"></textarea>
+                  </div>
+
+
+
+              </div>
+         
+      
+        
+        
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="saveEvent()">Save changes</button>
+    </div>
+
+  </div>
+</div>
+
                 
 
 

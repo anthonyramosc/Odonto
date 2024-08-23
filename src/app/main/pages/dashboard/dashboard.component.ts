@@ -122,6 +122,42 @@ export class DashboardComponent implements OnInit {
     this.isWeeklyViewVisible = false;
     this.isDailyViewVisible = true;
   }
+  openModal() {
+    this.isModalOpen = true;
+    this.newEventText = '';
+    this.currentCell = null;
+  }
+  
+  closeModal() {
+    this.isModalOpen = false;
+    this.newEventText = '';
+    this.currentCell = null;
+  }
+
+  addEvent(event: any) {
+    this.currentCell = event.target.closest('td');
+    console.log("Clicked cell:", this.currentCell);
+    this.openModal();
+  }
+
+  saveEvent() {
+    console.log("Saving event:", this.newEventText, "in cell:", this.currentCell);
+    if (this.currentCell && this.newEventText.trim() !== '') {
+      const eventDiv = document.createElement('div');
+      eventDiv.className = 'event';
+      eventDiv.innerText = this.newEventText;
+      eventDiv.style.backgroundColor = '#f85656';
+      eventDiv.style.color = '#fff';
+  
+      if (this.currentCell.querySelector('span') && this.currentCell.innerHTML.trim() === '') {
+        this.currentCell.innerHTML = '<span>' + this.currentCell.querySelector('span')?.innerText + '</span>';
+      }
+  
+      this.currentCell.appendChild(eventDiv);
+    }
+    this.closeModal();
+  }
+  
 
   prevMonth() {
     if (this.currentMonth === 0) {
@@ -161,41 +197,7 @@ export class DashboardComponent implements OnInit {
     this.currentDay = new Date(this.currentDay);
   }
 
-  openModal() {
-    this.isModalOpen = true;
-    this.newEventText = '';
-    this.currentCell = null;
-  }
 
-  closeModal() {
-    this.isModalOpen = false;
-    this.newEventText = '';
-    this.currentCell = null;
-  }
-
-  addEvent(event: any) {
-    this.currentCell = event.target.closest('td');
-    console.log("Clicked cell:", this.currentCell);
-    this.openModal();
-  }
-
-  saveEvent() {
-    console.log("Saving event:", this.newEventText, "in cell:", this.currentCell);
-    if (this.currentCell && this.newEventText.trim() !== '') {
-      const eventDiv = document.createElement('div');
-      eventDiv.className = 'event';
-      eventDiv.innerText = this.newEventText;
-      eventDiv.style.backgroundColor = '#f85656';
-      eventDiv.style.color = '#fff';
-
-      if (this.currentCell.innerHTML.trim() === '') {
-        this.currentCell.innerHTML = '<span>' + this.currentCell.querySelector('span')?.innerText + '</span>';
-      }
-
-      this.currentCell.appendChild(eventDiv);
-    }
-    this.closeModal();
-  }
 
   goToToday() {
     this.currentYear = this.currentDate.getFullYear();
