@@ -31,10 +31,15 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let week of weeksInMonth">
-                            <td *ngFor="let day of week" (click)="day.day && openModal()">
+                            <td *ngFor="let day of week" 
+                                [class.today]="isToday(day.day)"
+                                (click)="openModal(day.day)">
                               <span *ngIf="day.day">{{ day.day }}</span>
                             </td>
                           </tr>
+                          
+                          
+                          
                         </tbody>
                       </table>
                     </div>
@@ -62,9 +67,9 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let hour of hoursInDay">
-                            <td class="hour">{{ hour }}</td>
-                            <td *ngFor="let day of currentWeek" (click)="openModal()">
-                            </td>
+                            <td class="hour" >{{ hour }}</td>
+                            <td *ngFor="let day of currentWeek" (click)="openModal(day)">
+
                           </tr>
                         </tbody>
                       </table>
@@ -94,7 +99,7 @@
                         <tbody>
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour">{{ hour }}</td>
-                            <td (click)="openModal()"></td>
+                            <td (click)="openModal(hour)"></td>
                           </tr>
                         </tbody>
                       </table>
@@ -165,17 +170,10 @@
                 
   
 
-                 <div class="form-group">
-    <label for="horaConsulta">Hora:</label>
-    <div class="d-flex">
-        <input class="form-control me-2" id="hora" type="text" placeholder="Hora" style="width: 30%;" />
-        <input class="form-control me-2" id="minuto" type="text" placeholder="Minuto" style="width: 30%;" />
-        <select class="form-control" id="ampm" style="width: 35%;">
-            <option>am</option>
-            <option>pm</option>
-        </select>
-    </div>
-</div>
+                <div class="form-group">
+                  <label for="horaConsulta">Hora:</label>
+                  <input class="form-control" id="horaConsulta" type="time" />
+              </div>
 
 <div class="form-group">
   <label for="referral">Canal de Referido</label>
@@ -193,7 +191,7 @@
               <div class="col-md-6">
                 
                 <div class="form-group">
-                      <label for="motivoConsulta">Motivo de Consulta:</label>
+                      
                       <select class="form-control" id="motivoConsulta">
                           <option>Seleccione Motivo de Consulta</option>
                           <option>- Control de tratamiento </option>
@@ -203,7 +201,7 @@
                       </select>
                   </div>
                   <div class="form-group">
-                      <label for="observaciones">Observaciones:</label>
+                      
                       <textarea class="form-control" id="observaciones" rows="7" placeholder="Observaciones"></textarea>
                   </div>
 

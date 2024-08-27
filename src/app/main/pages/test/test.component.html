@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="btn-group mb-3" role="group">
+      <button type="button" class="btn btn-primary" (click)="setView('month')">Mes</button>
+      <button type="button" class="btn btn-primary" (click)="setView('week')">Semana</button>
+      <button type="button" class="btn btn-primary" (click)="setView('day')">Día</button>
+    </div>
+  
+    <div *ngIf="view === 'month'">
+      <h2 class="text-center">{{ currentDate | date: 'MMMM yyyy' }}</h2>
+      <div class="row">
+        <div class="col-1" *ngFor="let day of getDaysInMonth()">
+          <div class="border p-2">{{ day }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="view === 'week'">
+      <h2 class="text-center">Semana del {{ getStartOfWeek() | date: 'dd/MM/yyyy' }}</h2>
+      <div class="row">
+        <div class="col-1" *ngFor="let day of getDaysOfWeek()">
+          <div class="border p-2">{{ day | date: 'dd/MM/yyyy' }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="view === 'day'">
+      <h2 class="text-center">{{ currentDate | date: 'dd/MM/yyyy' }}</h2>
+      <div *ngFor="let event of getEventsForDay(currentDate)" class="border p-2 mb-2">
+        <span>{{ event }}</span>
+      </div>
+    </div>
+  </div>
+  

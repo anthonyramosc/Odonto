@@ -10,6 +10,7 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 
 import { AuthenticationModule } from './authentication/authentication.module'
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+import { TestComponent } from './test/test.component';
 
 
 @NgModule({
@@ -25,6 +26,11 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 
   ],
 
-  providers: []
+  providers: [],
+
+  declarations: [
+     TestComponent
+
+  ]
 })
 export class PagesModule {}

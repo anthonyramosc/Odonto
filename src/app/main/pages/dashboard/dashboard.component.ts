@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
   isWeeklyViewVisible = false;
   isDailyViewVisible = false;
   isModalOpen = false;
+
   newEventText: string = '';
   currentCell: HTMLElement | null = null;
 
@@ -72,38 +73,43 @@ export class DashboardComponent implements OnInit {
   get weeksInMonth() {
     const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
     const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-
+  
     let weeks = [];
-    let week = [];
-    for (let i = 0; i < firstDay; i++) {
-      week.push({});
-    }
+    let week = Array(firstDay).fill({});
+  
     for (let day = 1; day <= daysInMonth; day++) {
       week.push({ day });
+  
       if (week.length === 7) {
         weeks.push(week);
         week = [];
       }
     }
+  
     if (week.length > 0) {
       while (week.length < 7) {
         week.push({});
       }
       weeks.push(week);
     }
+  
     return weeks;
   }
+  
 
   get currentWeek() {
     const week = [];
     const start = new Date(this.currentWeekStart);
+  
     for (let i = 0; i < 7; i++) {
       const date = new Date(start);
       date.setDate(start.getDate() + i);
       week.push(date);
     }
+  
     return week;
   }
+  
 
   showMonthlyView() {
     this.isMonthlyViewVisible = true;
@@ -122,22 +128,32 @@ export class DashboardComponent implements OnInit {
     this.isWeeklyViewVisible = false;
     this.isDailyViewVisible = true;
   }
-  openModal() {
+
+  openModal(day: number | Date | string) {
+    if (typeof day === 'number') {
+      this.currentDay = new Date(this.currentYear, this.currentMonth, day);
+    } else if (day instanceof Date) {
+      this.currentDay = day;
+    } else {
+      console.log('Hora seleccionada:', day);
+    }
+    console.log('Abrir modal - Fecha: ' + this.currentDay.toDateString()); 
     this.isModalOpen = true;
-    this.newEventText = '';
-    this.currentCell = null;
+    console.log('Estado del modal:', this.isModalOpen); 
   }
   
+  
+  
+
   closeModal() {
     this.isModalOpen = false;
-    this.newEventText = '';
-    this.currentCell = null;
+
   }
 
   addEvent(event: any) {
     this.currentCell = event.target.closest('td');
     console.log("Clicked cell:", this.currentCell);
-    this.openModal();
+    this.openModal(event);
   }
 
   saveEvent() {
@@ -148,16 +164,16 @@ export class DashboardComponent implements OnInit {
       eventDiv.innerText = this.newEventText;
       eventDiv.style.backgroundColor = '#f85656';
       eventDiv.style.color = '#fff';
-  
+
       if (this.currentCell.querySelector('span') && this.currentCell.innerHTML.trim() === '') {
         this.currentCell.innerHTML = '<span>' + this.currentCell.querySelector('span')?.innerText + '</span>';
       }
-  
+
       this.currentCell.appendChild(eventDiv);
     }
     this.closeModal();
   }
-  
+
 
   prevMonth() {
     if (this.currentMonth === 0) {
@@ -206,12 +222,13 @@ export class DashboardComponent implements OnInit {
     this.currentDay = new Date();
   }
 
-  isToday(day: number) {
-    return this.currentYear === this.currentDate.getFullYear() &&
-      this.currentMonth === this.currentDate.getMonth() &&
-      day === this.currentDate.getDate();
+  isToday(day: number): boolean {
+    const today = new Date();
+    return day === today.getDate() &&
+           this.currentMonth === today.getMonth() &&
+           this.currentYear === today.getFullYear();
   }
-
+  
   private getStartOfWeek(date: Date): Date {
     const start = new Date(date);
     const day = start.getDay();

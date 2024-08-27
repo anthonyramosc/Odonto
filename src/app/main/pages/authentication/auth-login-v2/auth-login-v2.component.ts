@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core'
-import {ActivatedRoute} from '@angular/router'
-import {FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {first, takeUntil} from 'rxjs/operators'
-import {Subject} from 'rxjs'
-import {Router} from '@angular/router'
-import {CoreConfigService} from '@core/services/config.service'
-import {AuthenticationService} from 'app/auth/service/authentication.service'
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { first, takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs'
+import { Router } from '@angular/router'
+import { CoreConfigService } from '@core/services/config.service'
+import { AuthenticationService } from 'app/auth/service/authentication.service'
 import { ToastrService } from 'ngx-toastr'
 
 @Component({
@@ -86,6 +86,9 @@ export class AuthLoginV2Component implements OnInit {
         // Login
         this.loading = true
 
+        //localStorage.setItem('currentUser', JSON.stringify(data.data));
+        //this._router.navigate(['/dashboard']) //Old /home
+                
         this._authenticationService
             .login(this.f.usuario.value, this.f.password.value)
             .pipe(first())
@@ -101,7 +104,7 @@ export class AuthLoginV2Component implements OnInit {
                         this.error = 'Contraseña incorrecta'
                         return;
                     }
-                    if (data.data === null){
+                    if (data.data === null) {
                         this.loading = false;
                         this.error = 'Usuario y/o contraseña incorrecta'
                         return;
@@ -110,7 +113,6 @@ export class AuthLoginV2Component implements OnInit {
                     //     'Bienvenid  SGA ! 👋 ', '',
                     //     { toastClass: 'toast ngx-toastr', closeButton: true }
                     // );
-                    
                     localStorage.setItem('currentUser', JSON.stringify(data.data));
                     this._router.navigate(['/dashboard']) //Old /home
                     this.loading = false;
@@ -122,8 +124,8 @@ export class AuthLoginV2Component implements OnInit {
             );
     }
 
-// Lifecycle Hooks
-// -----------------------------------------------------------------------------------------------------
+    // Lifecycle Hooks
+    // -----------------------------------------------------------------------------------------------------
 
     /**
      * On init

@@ -94,10 +94,24 @@
   max-width: 100%;
 }
 
-.navh, .navd, .navf, .navc {
-  
+.form-group {
+  display: flex;
+  align-items: stretch; 
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.form-group label {
   flex: 1;
-  width: 100%;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  flex: 2;
+  max-width: 100%;
+  height: 100%;
 }
 
 
@@ -105,8 +119,32 @@
     margin-bottom: 15px;
 }
 
-.modal-body {
-    margin-bottom: 5px;
+#observaciones {
+  width: 100%;
+  
+}
+
+.modal-body .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.modal-body .col-left {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.modal-body .col-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  justify-content: space-between;
+}
+
+.modal-body .col-right .form-group {
+  width: 100%;
 }
 
 .modal-footer {
