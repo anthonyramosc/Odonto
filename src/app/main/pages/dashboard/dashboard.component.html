@@ -18,9 +18,9 @@
                           <button class="btn btn-outline-primary" (click)="goToToday()">Hoy</button>
                         </div>
                         <div class="month-navigation d-flex align-items-center">
-                          <button class="btn btn-outline-secondary" (click)="prevMonth()">&#9664;</button>
+                          <button class="btn btn-outline-secondary" (click)="prevMonth()" aria-label="Previous month">&#9664;</button>
                           <span class="month mx-2">{{ monthNames[currentMonth] }} {{ currentYear }}</span>
-                          <button class="btn btn-outline-secondary" (click)="nextMonth()">&#9654;</button>
+                          <button class="btn btn-outline-secondary" (click)="nextMonth()" aria-label="Next month">&#9654;</button>
                         </div>
                       </div>
                       <table class="table table-bordered">
@@ -69,7 +69,7 @@
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour" >{{ hour }}</td>
                             <td *ngFor="let day of currentWeek" (click)="openModal(day)">
-
+                              {{ day | date: 'dd' }}
                           </tr>
                         </tbody>
                       </table>
@@ -99,7 +99,10 @@
                         <tbody>
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour">{{ hour }}</td>
-                            <td (click)="openModal(hour)"></td>
+                            <td (click)="openModal(hour)">
+                              {{ hour }}
+                            </td>
+
                           </tr>
                         </tbody>
                       </table>
