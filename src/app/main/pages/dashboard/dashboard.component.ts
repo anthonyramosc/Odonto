@@ -5,6 +5,19 @@ import localeEs from '@angular/common/locales/es';
 
 registerLocaleData(localeEs, 'es');
 
+interface Event {
+  fullname: string;
+  identification: string;
+  phone: string;
+  email: string;
+  doctor: string;
+  date: Date;
+  time: string;
+  referral: string;
+  reason: string;
+  observations: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,6 +26,9 @@ registerLocaleData(localeEs, 'es');
 })
 
 export class DashboardComponent implements OnInit {
+  
+  events: { [key: string]: Event[] } = {};
+  newEvent: Event = this.createEmptyEvent();
 
   menu: any;
   dataestrEmpresas: any;
@@ -86,7 +102,10 @@ export class DashboardComponent implements OnInit {
     let week = Array(firstDayOfMonth).fill(null); 
   
     for (let day = 1; day <= daysInMonth; day++) {
-      week.push({ day, events: [] });
+      const currentDate = new Date(this.currentYear, this.currentMonth, day);
+      const dateKey = this.formatDateKey(currentDate);
+      const dayEvents = this.events[dateKey] || [];
+      week.push({ day, events: dayEvents});
   
       if (week.length === 7) {
         weeks.push(week);
@@ -123,32 +142,65 @@ export class DashboardComponent implements OnInit {
     this.isDailyViewVisible = true;
   }
 
-  openModal(day: number | Date ) {
+  openModal(day: number | Date) {
     if (typeof day === 'number') {
       this.currentDay = new Date(this.currentYear, this.currentMonth, day);
-    } else {
+    } else if (day instanceof Date) {
       this.currentDay = day;
-    } 
+    } else {
+      this.currentDay = new Date(); // Default to today if invalid input
+    }
     this.isModalOpen = true;
-    console.log('Estado del modal:', this.isModalOpen); 
+    this.newEvent = this.createEmptyEvent();
+    this.newEvent.date = this.currentDay;
   }
   
   closeModal() {
     this.isModalOpen = false;
-    this.newEventText = '';
+    this.newEvent = this.createEmptyEvent();
   }
-  
-  saveEvent() {
-    if (this.newEventText.trim() !== '') {
-      const day = this.currentDay.getDate();
-      const weekIndex = Math.floor((day + new Date(this.currentYear, this.currentMonth, 1).getDay() - 1) / 7);
-      const dayIndex = (day + new Date(this.currentYear, this.currentMonth, 1).getDay() - 1) % 7;
 
-      this.weeksInMonth[weekIndex][dayIndex].events.push(this.newEventText);
-    }
-    this.closeModal();
+
+  createEmptyEvent(): Event {
+    return {
+      fullname: '',
+      identification: '',
+      phone: '',
+      email: '',
+      doctor: '',
+      date: new Date(),
+      time: '',
+      referral: '',
+      reason: '',
+      observations: ''
+    };
   }
-  
+
+  getEventSummary(events: Event[]): string {
+    return events.map(event => `${event.time} - ${event.fullname} - ${event.email}`).join('\n');
+  }
+
+  saveEvent() {
+    if (!(this.newEvent.date instanceof Date)) {
+      console.error('Invalid date:', this.newEvent.date);
+      return;
+    }
+    const dateKey = this.formatDateKey(this.newEvent.date);
+    if (!this.events[dateKey]) {
+      this.events[dateKey] = [];
+    }
+    this.events[dateKey].push({...this.newEvent});
+    this.closeModal();
+    this.generateWeeksInMonth(); // Refresh the calendar view
+  }
+
+  formatDateKey(date: Date): string {
+    if (!(date instanceof Date)) {
+      console.error('Invalid date object:', date);
+      return '';
+    }
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  }
 
 
   prevMonth() {

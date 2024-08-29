@@ -33,6 +33,9 @@
                           <tr *ngFor="let week of weeksInMonth">
                             <td *ngFor="let day of week" (click)="openModal(day ? day.day : null)" [ngClass]="{'today': isToday(day?.day)}">
                               <span *ngIf="day">{{ day.day }}</span>
+                              <div *ngIf="day && day.events.length > 0" class="event-summary">
+                                {{ getEventSummary(day.events) }}
+                              </div>
                             </td>
                             
                           </tr>
@@ -67,7 +70,7 @@
                         <tbody>
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour" >{{ hour }}</td>
-                            <td *ngFor="let day of weeksInMonth" (click)="openModal()">
+                            <td *ngFor="let day of weeksInMonth" (click)="openModal(day)">
                             
                           </tr>
                         </tbody>
@@ -99,7 +102,9 @@
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour">{{ hour }}</td>
                             <td (click)="openModal()">
-                             
+                              <div *ngIf="day && day.events.length > 0" class="event-summary">
+                                {{ getEventSummary(day.events) }}
+                              </div>
                             </td>
 
                           </tr>
@@ -135,16 +140,16 @@
         
         <div class="col-sm-12 col-md-8 ">
           <div class="form-group">
-            <input class="form-control" id="fullname" type="text" placeholder="Nombres" />
+            <input class="form-control" id="fullname" type="text" placeholder="Nombres"   [(ngModel)]="newEvent.fullname" />
           </div>
           <div class="form-group">
-            <input class="form-control" id="lastname" type="text" placeholder="Identificación" />
+            <input class="form-control" id="lastname" type="text" placeholder="Identificación"  [(ngModel)]="newEvent.identification"/>
           </div>
           <div class="form-group">
-            <input class="form-control" id="identification" type="text" placeholder="Telefono de Referencia" />
+            <input class="form-control" id="identification" type="text" placeholder="Telefono de Referencia" [(ngModel)]="newEvent.phone" />
           </div>
           <div class="form-group">
-            <input class="form-control" id="email" type="email" placeholder="Correo electrónico" />
+            <input class="form-control" id="email" type="email" placeholder="Correo electrónico"  [(ngModel)]="newEvent.email" />
           </div>
         </div>
 
@@ -157,7 +162,7 @@
 
                   <div class="form-group">
                       <label for="doctor">Profesional:</label>
-                      <select class="form-control" id="doctor">
+                      <select class="form-control" id="doctor"  [(ngModel)]="newEvent.doctor">
                           <option>Dr. Xavier Guaman</option>
 
                       </select>
@@ -167,14 +172,14 @@
 
                   <div class="form-group">
                     <label for="birthdate">Fecha:</label>
-                    <input class="form-control" id="birthdate" type="date" />
+                    <input class="form-control" id="birthdate" type="date"[ngModel]="newEvent.date | date:'yyyy-MM-dd'" (ngModelChange)="newEvent.date = $event" />
                 </div>
                 
   
 
                 <div class="form-group">
                   <label for="horaConsulta">Hora:</label>
-                  <input class="form-control" id="horaConsulta" type="time" />
+                  <input class="form-control" id="horaConsulta" type="time" [(ngModel)]="newEvent.time"/>
               </div>
 
 <div class="form-group">

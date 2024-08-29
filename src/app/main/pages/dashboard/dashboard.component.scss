@@ -12,6 +12,20 @@
     width: 91.5%;
   }
   
+
+  .event-summary {
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 2px;
+    border-radius: 3px;
+  }
   .calendar th, .calendar td {
     text-align: center;
     vertical-align: middle;
@@ -163,6 +177,6 @@
 }
 
 .today {
-  background-color: #bfedf3;
+  background-color: #bfedf3; /* Color de fondo para el día actual */
 }
 
