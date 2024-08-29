@@ -22,10 +22,10 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.menu = this._coreMenuService.getCurrentMenu();
-
+    this.generateWeeksInMonth();
   }
+  
   isMonthlyViewVisible = true;
   isWeeklyViewVisible = false;
   isDailyViewVisible = false;
@@ -33,13 +33,15 @@ export class DashboardComponent implements OnInit {
 
   newEventText: string = '';
   currentCell: HTMLElement | null = null;
+  currentDay= new Date();
+  currentYear: number = new Date().getFullYear();
+  currentMonth: number = new Date().getMonth();
+  currentWeekStart: Date = this.getStartOfWeek(new Date());
+  weeksInMonth: any[] = [];
+  currentWeek: Date= new Date();
+  
 
-  currentYear = new Date().getFullYear();
-  currentMonth = new Date().getMonth();
-  currentDate = new Date();
-  currentWeekStart = this.getStartOfWeek(new Date());
-  currentDay = new Date();
-
+  
   monthNames = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
@@ -47,6 +49,10 @@ export class DashboardComponent implements OnInit {
 
   daysInWeek = [
     "Dom.", "Lun.", "Mar.", "Mié.", "Jue.", "Vie.", "Sáb."
+  ];
+
+  daysInWeeks = [
+     "Lun.", "Mar.", "Mié.", "Jue.", "Vie.", "Sáb.","Dom."
   ];
 
   hoursInDay = [
@@ -70,15 +76,17 @@ export class DashboardComponent implements OnInit {
     "12:00am"
   ];
 
-  get weeksInMonth() {
-    const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
-    const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+
   
+  generateWeeksInMonth() {
+    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+    const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+    
     let weeks = [];
-    let week = Array(firstDay).fill({});
+    let week = Array(firstDayOfMonth).fill(null); 
   
     for (let day = 1; day <= daysInMonth; day++) {
-      week.push({ day });
+      week.push({ day, events: [] });
   
       if (week.length === 7) {
         weeks.push(week);
@@ -86,30 +94,16 @@ export class DashboardComponent implements OnInit {
       }
     }
   
+
     if (week.length > 0) {
       while (week.length < 7) {
-        week.push({});
+        week.push(null);
       }
       weeks.push(week);
     }
   
-    return weeks;
+    this.weeksInMonth = weeks;
   }
-  
-
-  get currentWeek() {
-    const week = [];
-    const start = new Date(this.currentWeekStart);
-  
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(start);
-      date.setDate(start.getDate() + i);
-      week.push(date);
-    }
-  
-    return week;
-  }
-  
 
   showMonthlyView() {
     this.isMonthlyViewVisible = true;
@@ -129,50 +123,32 @@ export class DashboardComponent implements OnInit {
     this.isDailyViewVisible = true;
   }
 
-  openModal(day: number | Date | string) {
+  openModal(day: number | Date ) {
     if (typeof day === 'number') {
       this.currentDay = new Date(this.currentYear, this.currentMonth, day);
-    } else if (day instanceof Date) {
-      this.currentDay = day;
     } else {
-      console.log('Hora seleccionada:', day);
-    }
-    console.log('Abrir modal - Fecha: ' + this.currentDay.toDateString()); 
+      this.currentDay = day;
+    } 
     this.isModalOpen = true;
     console.log('Estado del modal:', this.isModalOpen); 
   }
   
-  
-  
-
   closeModal() {
     this.isModalOpen = false;
-
+    this.newEventText = '';
   }
-
-  addEvent(event: any) {
-    this.currentCell = event.target.closest('td');
-    console.log("Clicked cell:", this.currentCell);
-    this.openModal(event);
-  }
-
+  
   saveEvent() {
-    console.log("Saving event:", this.newEventText, "in cell:", this.currentCell);
-    if (this.currentCell && this.newEventText.trim() !== '') {
-      const eventDiv = document.createElement('div');
-      eventDiv.className = 'event';
-      eventDiv.innerText = this.newEventText;
-      eventDiv.style.backgroundColor = '#f85656';
-      eventDiv.style.color = '#fff';
+    if (this.newEventText.trim() !== '') {
+      const day = this.currentDay.getDate();
+      const weekIndex = Math.floor((day + new Date(this.currentYear, this.currentMonth, 1).getDay() - 1) / 7);
+      const dayIndex = (day + new Date(this.currentYear, this.currentMonth, 1).getDay() - 1) % 7;
 
-      if (this.currentCell.querySelector('span') && this.currentCell.innerHTML.trim() === '') {
-        this.currentCell.innerHTML = '<span>' + this.currentCell.querySelector('span')?.innerText + '</span>';
-      }
-
-      this.currentCell.appendChild(eventDiv);
+      this.weeksInMonth[weekIndex][dayIndex].events.push(this.newEventText);
     }
     this.closeModal();
   }
+  
 
 
   prevMonth() {
@@ -182,8 +158,9 @@ export class DashboardComponent implements OnInit {
     } else {
       this.currentMonth--;
     }
+    this.generateWeeksInMonth(); // Actualiza las semanas después de cambiar el mes
   }
-
+  
   nextMonth() {
     if (this.currentMonth === 11) {
       this.currentMonth = 0;
@@ -191,16 +168,20 @@ export class DashboardComponent implements OnInit {
     } else {
       this.currentMonth++;
     }
+    this.generateWeeksInMonth(); // Actualiza las semanas después de cambiar el mes
   }
+  
 
   prevWeek() {
     this.currentWeekStart.setDate(this.currentWeekStart.getDate() - 7);
     this.currentWeekStart = this.getStartOfWeek(this.currentWeekStart);
+    this.generateWeeksInMonth(); // Actualiza las semanas en la vista
   }
-
+  
   nextWeek() {
     this.currentWeekStart.setDate(this.currentWeekStart.getDate() + 7);
     this.currentWeekStart = this.getStartOfWeek(this.currentWeekStart);
+    this.generateWeeksInMonth(); // Actualiza las semanas en la vista
   }
 
   prevDay() {
@@ -216,8 +197,8 @@ export class DashboardComponent implements OnInit {
 
 
   goToToday() {
-    this.currentYear = this.currentDate.getFullYear();
-    this.currentMonth = this.currentDate.getMonth();
+    this.currentYear = new Date().getFullYear();
+    this.currentMonth = new Date().getMonth();
     this.currentWeekStart = this.getStartOfWeek(new Date());
     this.currentDay = new Date();
   }
@@ -229,11 +210,18 @@ export class DashboardComponent implements OnInit {
            this.currentYear === today.getFullYear();
   }
   
-  private getStartOfWeek(date: Date): Date {
+  getStartOfWeek(date: Date): Date {
     const start = new Date(date);
     const day = start.getDay();
     const diff = start.getDate() - day + (day === 0 ? -6 : 1);
     return new Date(start.setDate(diff));
   }
+
+  getEndOfWeek(startOfWeek: Date): Date {
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // Seis días después del inicio de la semana
+    return endOfWeek;
+  }
+  
 
 }

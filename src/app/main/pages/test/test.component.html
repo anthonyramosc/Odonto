@@ -1,69 +1,237 @@
-<div class="container">
-  <!-- Botones de vista -->
-  <div class="d-flex justify-content-center my-3">
-    <button class="btn btn-primary mx-2" (click)="setView('month')">M</button>
-    <button class="btn btn-primary mx-2" (click)="setView('week')">S</button>
-    <button class="btn btn-primary mx-2" (click)="setView('day')">D</button>
-    <button class="btn btn-primary mx-2" (click)="goToToday()">Hoy</button>
-  </div>
+<div class="content-wrapper mt-2">
+  <div class="content-body">
+    <section id="home-page">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Sistema de Gestión Odontológico </h4>
+            </div>
+            <div class="card-body pb-1">
+                <div class="calendar">
+                  <div id="monthlyView" class="calendar month-view" [class.d-none]="!isMonthlyViewVisible">
+                    <div class="header d-flex justify-content-between align-items-center bg-light p-3">
+                      <div class="buttons">
+                        <button class="btn btn-outline-primary" (click)="showMonthlyView()">M</button>
+                        <button class="btn btn-outline-primary" (click)="showWeeklyView()">S</button>
+                        <button class="btn btn-outline-primary" (click)="showDailyView()">D</button>
+                        <button class="btn btn-outline-primary" (click)="goToToday()">Hoy</button>
+                      </div>
+                      <div class="month-navigation d-flex align-items-center">
+                        <button class="btn btn-outline-secondary" (click)="prevMonth()" aria-label="Previous month">&#9664;</button>
+                        <span class="month mx-2">{{ monthNames[currentMonth] }} {{ currentYear }}</span>
+                        <button class="btn btn-outline-secondary" (click)="nextMonth()" aria-label="Next month">&#9654;</button>
+                      </div>
+                    </div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th *ngFor="let day of daysInWeek">{{ day }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let week of weeksInMonth">
+                          <td *ngFor="let day of week" 
+                          (click)="openModal(day.day)" [ngClass]="{'today': isToday(day.day)}">
+                            <span *ngIf="day.day">{{ day.day }}</span>
+                          </td>
+                        </tr>
+                        
+                        
+                        
+                      </tbody>
+                    </table>
+                  </div>
+              
+                  <div id="weeklyView" class="calendar week-view" [class.d-none]="!isWeeklyViewVisible">
+                    <div class="header d-flex justify-content-between align-items-center bg-light p-3">
+                      <div class="buttons">
+                        <button class="btn btn-outline-primary" (click)="showMonthlyView()">M</button>
+                        <button class="btn btn-outline-primary" (click)="showWeeklyView()">S</button>
+                        <button class="btn btn-outline-primary" (click)="showDailyView()">D</button>
+                        <button class="btn btn-outline-primary" (click)="goToToday()">Hoy</button>
+                      </div>
+                      <div class="week-navigation d-flex align-items-center">
+                        <button class="btn btn-outline-secondary" (click)="prevWeek()">&#9664;</button>
+                        <span class="week mx-2">{{ currentWeekStart | date: 'dd/MM/yyyy' }} - {{ currentWeek[6] | date: 'dd/MM/yyyy' }}</span>
+                        <button class="btn btn-outline-secondary" (click)="nextWeek()">&#9654;</button>
+                      </div>
+                    </div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>/</th>
+                          <th *ngFor="let day of currentWeek">{{ day | date: 'EEE' }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let hour of hoursInDay">
+                          <td class="hour" >{{ hour }}</td>
+                          <td *ngFor="let day of currentWeek" (click)="openModal(day)">
+                            {{ day | date: 'dd' }}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              
+                  <div id="dailyView" class="calendar day-view" [class.d-none]="!isDailyViewVisible">
+                    <div class="header d-flex justify-content-between align-items-center bg-light p-3">
+                      <div class="buttons">
+                        <button class="btn btn-outline-primary" (click)="showMonthlyView()">M</button>
+                        <button class="btn btn-outline-primary" (click)="showWeeklyView()">S</button>
+                        <button class="btn btn-outline-primary" (click)="showDailyView()">D</button>
+                        <button class="btn btn-outline-primary" (click)="goToToday()">Hoy</button>
+                      </div>
+                      <div class="day-navigation d-flex align-items-center">
+                        <button class="btn btn-outline-secondary" (click)="prevDay()">&#9664;</button>
+                        <span class="day mx-2">{{ currentDay | date: 'fullDate' }}</span>
+                        <button class="btn btn-outline-secondary" (click)="nextDay()">&#9654;</button>
+                      </div>
+                    </div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th class="hour">/</th>
+                          <th class="text-center">{{ currentDay | date: 'EEEE' }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let hour of hoursInDay">
+                          <td class="hour">{{ hour }}</td>
+                          <td (click)="openModal(hour)">
+                            {{ hour }}
+                          </td>
 
-  <!-- Vista mensual -->
-  <div *ngIf="view === 'month'">
-    <h2 class="text-center">{{ currentDate | date: 'MMMM yyyy' }}</h2>
-    <div class="row">
-      <div class="col-1" *ngFor="let day of getDaysInMonth()">
-        <div class="border p-2" (click)="openModal(day)">
-          {{ day }}
-          <div *ngFor="let event of getEventsForDay(currentYear, currentMonth, day)">
-            <small>{{ event.title }}</small>
-          </div>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+
+
+<div class="modal-overlay" *ngIf="isModalOpen">
+
+<div class="modal-content" style="max-width: 600px; background-color: #fff; border-radius: 8px; overflow: hidden;">
+
+  <div class="modal-header bg-primary text-white">
+    <h5 class="modal-title  text-white">Informacion Paciente </h5>
+    <button type="button" class="close text-white" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+
+  <div class="modal-body">
+    <div class="row align-items-center">
+      
+      <div class="col d-flex justify-content-center">
+      <div class="col-sm-12 col-md-4 d-flex justify-content-center">
+        <img class="img-fluid rounded-circle" src="https://innovation.com.mx/assets/images/avatar.png" alt="Patient Image" style="max-width: 120px;">
+      </div>
+      </div>
+     
+
+      
+      <div class="col-sm-12 col-md-8 ">
+        <div class="form-group">
+          <input class="form-control" id="fullname" type="text" placeholder="Nombres" />
+        </div>
+        <div class="form-group">
+          <input class="form-control" id="lastname" type="text" placeholder="Identificación" />
+        </div>
+        <div class="form-group">
+          <input class="form-control" id="identification" type="text" placeholder="Telefono de Referencia" />
+        </div>
+        <div class="form-group">
+          <input class="form-control" id="email" type="email" placeholder="Correo electrónico" />
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Vista semanal -->
-  <div *ngIf="view === 'week'">
-    <h2 class="text-center">Semana del {{ currentWeekStart | date: 'dd/MM/yyyy' }}</h2>
-    <div class="row">
-      <div class="col-1" *ngFor="let day of getDaysOfWeek()">
-        <div class="border p-2" (click)="openModal(day.getDate())">
-          {{ day | date: 'dd/MM/yyyy' }}
-          <div *ngFor="let event of getEventsForDay(day.getFullYear(), day.getMonth(), day.getDate())">
-            <small>{{ event.title }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Vista diaria -->
-  <div *ngIf="view === 'day'">
-    <h2 class="text-center">{{ currentDay | date: 'dd/MM/yyyy' }}</h2>
-    <div class="border p-2" *ngFor="let event of getEventsForDay(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate())">
-      <span>{{ event.title }}</span>
-    </div>
-    <button class="btn btn-secondary" (click)="openModal(currentDay.getDate())">Agregar Evento</button>
-  </div>
+<div class="col  grid gap-3">
+      <div class="container">
+        <div class="row">
+
+            <div class="col-md-15">
+
+                <div class="form-group">
+                    <label for="doctor">Profesional:</label>
+                    <select class="form-control" id="doctor">
+                        <option>Dr. Xavier Guaman</option>
+
+                    </select>
+                </div>
+
+
+
+                <div class="form-group">
+                  <label for="birthdate">Fecha:</label>
+                  <input class="form-control" id="birthdate" type="date" />
+              </div>
+              
+
+
+              <div class="form-group">
+                <label for="horaConsulta">Hora:</label>
+                <input class="form-control" id="horaConsulta" type="time" />
+            </div>
+
+<div class="form-group">
+<label for="referral">Canal de Referido</label>
+<select id="referral" class="form-control">
+  <option>- Seleccione Canal de Referido</option>
+  <option>- (+) Agregar canal preferido</option>
+</select>
 </div>
 
-<!-- Modal para agregar eventos -->
-<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel">Agregar Evento</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <input type="text" class="form-control" placeholder="Título del Evento" [(ngModel)]="newEventTitle">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="saveEvent()">Guardar Evento</button>
-      </div>
+                
+            </div>
+</div>
+         </div>   
+         </div>
+            <div class="col-md-6">
+              
+              <div class="form-group">
+                    
+                    <select class="form-control" id="motivoConsulta">
+                        <option>Seleccione Motivo de Consulta</option>
+                        <option>- Control de tratamiento </option>
+                        <option>- Limpieza</option>
+                        <option>- Primera Consulta</option>
+                        <option>- Urgencia</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    
+                    <textarea class="form-control" id="observaciones" rows="7" placeholder="Observaciones"></textarea>
+                </div>
+
+
+
+            </div>
+       
+    
+      
+      
     </div>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+    <button type="button" class="btn btn-primary" (click)="saveEvent()">Save changes</button>
+  </div>
+
+</div>
+</div>
+
+              
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>

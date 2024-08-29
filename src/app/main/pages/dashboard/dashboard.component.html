@@ -31,11 +31,10 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let week of weeksInMonth">
-                            <td *ngFor="let day of week" 
-                                [class.today]="isToday(day.day)"
-                                (click)="openModal(day.day)">
-                              <span *ngIf="day.day">{{ day.day }}</span>
+                            <td *ngFor="let day of week" (click)="openModal(day ? day.day : null)" [ngClass]="{'today': isToday(day?.day)}">
+                              <span *ngIf="day">{{ day.day }}</span>
                             </td>
+                            
                           </tr>
                           
                           
@@ -54,7 +53,7 @@
                         </div>
                         <div class="week-navigation d-flex align-items-center">
                           <button class="btn btn-outline-secondary" (click)="prevWeek()">&#9664;</button>
-                          <span class="week mx-2">{{ currentWeekStart | date: 'dd/MM/yyyy' }} - {{ currentWeek[6] | date: 'dd/MM/yyyy' }}</span>
+                          <span class="week mx-2">{{ getStartOfWeek(currentWeekStart) | date: 'dd/MM/yyyy' }} - {{getEndOfWeek(currentWeekStart) | date: 'dd/MM/yyyy' }}</span>
                           <button class="btn btn-outline-secondary" (click)="nextWeek()">&#9654;</button>
                         </div>
                       </div>
@@ -62,14 +61,14 @@
                         <thead>
                           <tr>
                             <th>/</th>
-                            <th *ngFor="let day of currentWeek">{{ day | date: 'EEE' }}</th>
+                            <th *ngFor="let day of daysInWeeks">{{day}}</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour" >{{ hour }}</td>
-                            <td *ngFor="let day of currentWeek" (click)="openModal(day)">
-                              {{ day | date: 'dd' }}
+                            <td *ngFor="let day of weeksInMonth" (click)="openModal()">
+                            
                           </tr>
                         </tbody>
                       </table>
@@ -99,8 +98,8 @@
                         <tbody>
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour">{{ hour }}</td>
-                            <td (click)="openModal(hour)">
-                              {{ hour }}
+                            <td (click)="openModal()">
+                             
                             </td>
 
                           </tr>
@@ -184,9 +183,7 @@
     <option>- Seleccione Canal de Referido</option>
     <option>- (+) Agregar canal preferido</option>
   </select>
-</div>
-
-                  
+</div>          
               </div>
   </div>
            </div>   
