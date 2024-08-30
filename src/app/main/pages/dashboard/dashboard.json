@@ -1,19 +1,28 @@
-{
-    "events": [
-      {
-        "id": 1,
-        "date": "2024-08-01",
-        "name": "Reunión con Juan",
-        "cedula": "123456789",
-        "description": "Discusión sobre el proyecto X"
-      },
-      {
-        "id": 2,
-        "date": "2024-08-15",
-        "name": "Consulta médica",
-        "cedula": "987654321",
-        "description": "Chequeo anual con el Dr. Pérez"
-      }
-    ]
+[
+  {
+    "id": "1",
+    "fullname": "Juan Pérez",
+    "identification": "1234567890",
+    "phone": "123-456-7890",
+    "email": "juan@example.com",
+    "doctor": "Dr. García",
+    "date": "2024-08-30",
+    "time": "10:00",
+    "referral": "Amigo",
+    "reason": "Revisión anual",
+    "observations": "Ninguna"
+  },
+  {
+    "id": "2",
+    "fullname": "María López",
+    "identification": "0987654321",
+    "phone": "098-765-4321",
+    "email": "maria@example.com",
+    "doctor": "Dra. Rodríguez",
+    "date": "2024-08-30",
+    "time": "14:30",
+    "referral": "Internet",
+    "reason": "Dolor de muelas",
+    "observations": "Alergia a la penicilina"
   }
-  
+]

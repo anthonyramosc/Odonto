@@ -2,21 +2,12 @@ import { Component, OnInit, LOCALE_ID } from '@angular/core';
 import { CoreMenuService } from '@core/components/core-menu/core-menu.service';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { DashboardService, Event } from './dashboard.service';
+import { v4 as uuidv4 } from 'uuid';
 
 registerLocaleData(localeEs, 'es');
 
-interface Event {
-  fullname: string;
-  identification: string;
-  phone: string;
-  email: string;
-  doctor: string;
-  date: Date;
-  time: string;
-  referral: string;
-  reason: string;
-  observations: string;
-}
+
 
 @Component({
   selector: 'app-dashboard',
@@ -27,26 +18,44 @@ interface Event {
 
 export class DashboardComponent implements OnInit {
   
-  events: { [key: string]: Event[] } = {};
-  newEvent: Event = this.createEmptyEvent();
+  events: Event[] = [];
+ 
+  newEvent: Event;
 
   menu: any;
   dataestrEmpresas: any;
 
   constructor(
     private _coreMenuService: CoreMenuService,
-  ) { }
+    private dashboardService: DashboardService
+  ) { 
+    this.newEvent = this.createEmptyEvent();
+  }
 
   ngOnInit(): void {
     this.menu = this._coreMenuService.getCurrentMenu();
-    this.generateWeeksInMonth();
+    this.loadEvents();
+    
+  }
+
+  loadEvents(): void {
+    console.log('Iniciando carga de eventos...');
+    this.dashboardService.getEvents()
+      .subscribe(
+        events => {
+          console.log('Eventos cargados:', events);
+          this.events = events;
+          this.generateWeeksInMonth();
+        },
+        error => console.error('Error al cargar eventos:', error)
+      );
   }
   
   isMonthlyViewVisible = true;
   isWeeklyViewVisible = false;
   isDailyViewVisible = false;
   isModalOpen = false;
-
+  isSummaryOpen = false;
   newEventText: string = '';
   currentCell: HTMLElement | null = null;
   currentDay= new Date();
@@ -95,6 +104,7 @@ export class DashboardComponent implements OnInit {
 
   
   generateWeeksInMonth() {
+    console.log('Generando semanas del mes...');
     const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
     const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
     
@@ -103,10 +113,10 @@ export class DashboardComponent implements OnInit {
   
     for (let day = 1; day <= daysInMonth; day++) {
       const currentDate = new Date(this.currentYear, this.currentMonth, day);
-      const dateKey = this.formatDateKey(currentDate);
-      const dayEvents = this.events[dateKey] || [];
-      week.push({ day, events: dayEvents});
-  
+      const dateString = currentDate.toISOString().split('T')[0];
+      const dayEvents = this.events.filter(event => event.date === dateString);
+      week.push({ day, events: dayEvents });
+
       if (week.length === 7) {
         weeks.push(week);
         week = [];
@@ -122,6 +132,7 @@ export class DashboardComponent implements OnInit {
     }
   
     this.weeksInMonth = weeks;
+    console.log('Semanas generadas:', this.weeksInMonth);
   }
 
   showMonthlyView() {
@@ -148,11 +159,15 @@ export class DashboardComponent implements OnInit {
     } else if (day instanceof Date) {
       this.currentDay = day;
     } else {
-      this.currentDay = new Date(); // Default to today if invalid input
+      this.currentDay = new Date(); 
     }
     this.isModalOpen = true;
     this.newEvent = this.createEmptyEvent();
-    this.newEvent.date = this.currentDay;
+    this.newEvent.date = this.currentDay.toISOString().split('T')[0];
+  }
+
+  openSummary(){
+    this.isSummaryOpen = true;
   }
   
   closeModal() {
@@ -163,12 +178,13 @@ export class DashboardComponent implements OnInit {
 
   createEmptyEvent(): Event {
     return {
+      id: uuidv4(),
       fullname: '',
       identification: '',
       phone: '',
       email: '',
       doctor: '',
-      date: new Date(),
+      date: new Date().toISOString().split('T')[0],
       time: '',
       referral: '',
       reason: '',
@@ -177,21 +193,20 @@ export class DashboardComponent implements OnInit {
   }
 
   getEventSummary(events: Event[]): string {
-    return events.map(event => `${event.time} - ${event.fullname} - ${event.email}`).join('\n');
+    return events.map(event => `${event.time} - ${event.fullname}`).join('\n');
   }
 
-  saveEvent() {
-    if (!(this.newEvent.date instanceof Date)) {
-      console.error('Invalid date:', this.newEvent.date);
-      return;
-    }
-    const dateKey = this.formatDateKey(this.newEvent.date);
-    if (!this.events[dateKey]) {
-      this.events[dateKey] = [];
-    }
-    this.events[dateKey].push({...this.newEvent});
-    this.closeModal();
-    this.generateWeeksInMonth(); // Refresh the calendar view
+  saveEvent(event: Event): void {
+    console.log('Guardando evento:', event);
+    this.dashboardService.addEvent(event)
+      .subscribe(
+        savedEvent => {
+          console.log('Evento guardado:', savedEvent);
+          this.events.push(savedEvent);
+          this.generateWeeksInMonth();
+        },
+        error => console.error('Error al guardar evento:', error)
+      );
   }
 
   formatDateKey(date: Date): string {
@@ -210,7 +225,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.currentMonth--;
     }
-    this.generateWeeksInMonth(); // Actualiza las semanas después de cambiar el mes
+    this.generateWeeksInMonth();
   }
   
   nextMonth() {
@@ -220,20 +235,20 @@ export class DashboardComponent implements OnInit {
     } else {
       this.currentMonth++;
     }
-    this.generateWeeksInMonth(); // Actualiza las semanas después de cambiar el mes
+    this.generateWeeksInMonth(); 
   }
   
 
   prevWeek() {
     this.currentWeekStart.setDate(this.currentWeekStart.getDate() - 7);
     this.currentWeekStart = this.getStartOfWeek(this.currentWeekStart);
-    this.generateWeeksInMonth(); // Actualiza las semanas en la vista
+    this.generateWeeksInMonth(); 
   }
   
   nextWeek() {
     this.currentWeekStart.setDate(this.currentWeekStart.getDate() + 7);
     this.currentWeekStart = this.getStartOfWeek(this.currentWeekStart);
-    this.generateWeeksInMonth(); // Actualiza las semanas en la vista
+    this.generateWeeksInMonth(); 
   }
 
   prevDay() {
@@ -271,7 +286,7 @@ export class DashboardComponent implements OnInit {
 
   getEndOfWeek(startOfWeek: Date): Date {
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // Seis días después del inicio de la semana
+    endOfWeek.setDate(startOfWeek.getDate() + 6); 
     return endOfWeek;
   }
   

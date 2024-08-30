@@ -33,8 +33,10 @@
                           <tr *ngFor="let week of weeksInMonth">
                             <td *ngFor="let day of week" (click)="openModal(day ? day.day : null)" [ngClass]="{'today': isToday(day?.day)}">
                               <span *ngIf="day">{{ day.day }}</span>
-                              <div *ngIf="day && day.events.length > 0" class="event-summary">
-                                {{ getEventSummary(day.events) }}
+                              <div (click)="openSummary()" *ngIf="day && day.events && day.events.length > 0" class="event-summary">
+                                <div   *ngFor="let event of day.events" class="event">
+                                  {{ event.time }} - {{ event.fullname }}
+                                </div>
                               </div>
                             </td>
                             
@@ -172,7 +174,7 @@
 
                   <div class="form-group">
                     <label for="birthdate">Fecha:</label>
-                    <input class="form-control" id="birthdate" type="date"[ngModel]="newEvent.date | date:'yyyy-MM-dd'" (ngModelChange)="newEvent.date = $event" />
+                    <input class="form-control" id="birthdate" type="date"[(ngModel)]="newEvent.date" />
                 </div>
                 
   
