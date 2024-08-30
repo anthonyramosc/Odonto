@@ -8,6 +8,7 @@
         vertical-align: top;
         padding: 5px;
         position: relative;
+        border-color: #c7c7c7;
         
         &.today {
           background-color: rgba(0, 123, 255, 0.1);
@@ -47,7 +48,7 @@
         height: 30px;
         vertical-align: top;
         padding: 2px;
-        
+        border-color: #c7c7c7;
         &.hour {
           width: 100px;
           text-align: right;
@@ -63,6 +64,7 @@
           font-size: 0.8em;
           margin-bottom: 2px;
           display: block;
+          
         }
       }
     }
