@@ -142,18 +142,10 @@
 
         
         <div class="col-sm-12 col-md-8 ">
-          <div class="form-group">
-            <input class="form-control" id="fullname" type="text" placeholder="Nombres"   [(ngModel)]="newEvent.fullname" />
-          </div>
-          <div class="form-group">
-            <input class="form-control" id="lastname" type="text" placeholder="Identificación"  [(ngModel)]="newEvent.identification"/>
-          </div>
-          <div class="form-group">
-            <input class="form-control" id="identification" type="text" placeholder="Telefono de Referencia" [(ngModel)]="newEvent.phone" />
-          </div>
-          <div class="form-group">
-            <input class="form-control" id="email" type="email" placeholder="Correo electrónico"  [(ngModel)]="newEvent.email" />
-          </div>
+          <input class="form-control" id="fullname" type="text" placeholder="Nombres" [(ngModel)]="newEvent.fullname" />
+<input class="form-control" id="identification" type="text" placeholder="Identificación" [(ngModel)]="newEvent.identification"/>
+<input class="form-control" id="phone" type="text" placeholder="Telefono de Referencia" [(ngModel)]="newEvent.phone" />
+<input class="form-control" id="email" type="email" placeholder="Correo electrónico" [(ngModel)]="newEvent.email" />
         </div>
 
 
@@ -163,31 +155,16 @@
 
               <div class="col-md-15">
 
-                  <div class="form-group">
-                      <label for="doctor">Profesional:</label>
-                      <select class="form-control" id="doctor"  [(ngModel)]="newEvent.doctor">
-                          <option>Dr. Xavier Guaman</option>
-
-                      </select>
-                  </div>
+                <select class="form-control" id="doctor" [(ngModel)]="newEvent.doctor">
+                  <option>Dr. Xavier Guaman</option>
+                </select>
   
 
 
-                  <div class="form-group">
-                    <label for="birthdate">Fecha:</label>
-                    <input class="form-control" id="birthdate" type="date"[(ngModel)]="newEvent.date" />
-                </div>
-                
-  
-
-                <div class="form-group">
-                  <label for="horaConsulta">Hora:</label>
-                  <input class="form-control" id="horaConsulta" type="time" [(ngModel)]="newEvent.time"/>
-              </div>
-
+                <input class="form-control" id="date" type="date" [(ngModel)]="newEvent.date" />
+                <input class="form-control" id="time" type="time" [(ngModel)]="newEvent.time"/>
 <div class="form-group">
-  <label for="referral">Canal de Referido</label>
-  <select id="referral" class="form-control">
+  <select id="referral" class="form-control" [(ngModel)]="newEvent.referral">
     <option>- Seleccione Canal de Referido</option>
     <option>- (+) Agregar canal preferido</option>
   </select>
@@ -200,17 +177,17 @@
                 
                 <div class="form-group">
                       
-                      <select class="form-control" id="motivoConsulta">
-                          <option>Seleccione Motivo de Consulta</option>
-                          <option>- Control de tratamiento </option>
-                          <option>- Limpieza</option>
-                          <option>- Primera Consulta</option>
-                          <option>- Urgencia</option>
-                      </select>
+                  <select class="form-control" id="reason" [(ngModel)]="newEvent.reason">
+                    <option>Seleccione Motivo de Consulta</option>
+                    <option>- Control de tratamiento </option>
+                    <option>- Limpieza</option>
+                    <option>- Primera Consulta</option>
+                    <option>- Urgencia</option>
+                  </select>
                   </div>
                   <div class="form-group">
                       
-                      <textarea class="form-control" id="observaciones" rows="7" placeholder="Observaciones"></textarea>
+                    <textarea class="form-control" id="observations" rows="7" placeholder="Observaciones" [(ngModel)]="newEvent.observations"></textarea>
                   </div>
 
 

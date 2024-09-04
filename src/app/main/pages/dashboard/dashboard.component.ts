@@ -19,7 +19,6 @@ registerLocaleData(localeEs, 'es');
 export class DashboardComponent implements OnInit {
   
   events: Event[] = [];
- 
   newEvent: Event;
 
   menu: any;
@@ -77,7 +76,7 @@ export class DashboardComponent implements OnInit {
   ];
 
   daysInWeeks = [
-     "Lun.", "Mar.", "Mié.", "Jue.", "Vie.", "Sáb.","Dom."
+     "Lun.", "Mar.", "Mié.", "Jue.", "Vie."
   ];
 
   hoursInDay = [
@@ -196,18 +195,19 @@ export class DashboardComponent implements OnInit {
     return events.map(event => `${event.time} - ${event.fullname}`).join('\n');
   }
 
-  saveEvent(event: Event): void {
-    console.log('Guardando evento:', event);
-    this.dashboardService.addEvent(event)
+  saveEvent(): void {
+    console.log('Guardando evento:', this.newEvent);
+    this.dashboardService.addEvent(this.newEvent)
       .subscribe(
         savedEvent => {
           console.log('Evento guardado:', savedEvent);
           this.events.push(savedEvent);
           this.generateWeeksInMonth();
+          this.closeModal();
         },
         error => console.error('Error al guardar evento:', error)
       );
-  }
+  } 
 
   formatDateKey(date: Date): string {
     if (!(date instanceof Date)) {

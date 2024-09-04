@@ -22,7 +22,7 @@ export interface Event {
   providedIn: 'root'
 })
 export class DashboardService {
-  private eventsUrl = 'app/main/pages/dashboard/dashboard.json'; 
+  private eventsUrl = 'assets/data/events.json'; 
 
   constructor(private http: HttpClient) { }
 
@@ -35,17 +35,15 @@ export class DashboardService {
   }
 
   addEvent(event: Event): Observable<Event> {
-    return this.http.post<Event>(this.eventsUrl, event)
-      .pipe(
-        tap((newEvent: Event) => console.log(`added event w/ id=${newEvent.id}`)),
-        catchError(this.handleError<Event>('addEvent'))
-      );
-      
+    return of(event).pipe(
+      tap((newEvent: Event) => console.log(`added event w/ id=${newEvent.id}`)),
+      catchError(this.handleError<Event>('addEvent'))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.log(`${operation} failed:`, error);
+      console.error(`${operation} failed:`, error);
       return of(result as T);
     };
   }
