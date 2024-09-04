@@ -31,10 +31,10 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let week of weeksInMonth">
-                            <td *ngFor="let day of week" (click)="openModal(day ? day.day : null)" [ngClass]="{'today': isToday(day?.day)}">
+                            <td *ngFor="let day of week" (click)="openModal(day ? day.day : null, event)" [ngClass]="{'today': isToday(day?.day)}">
                               <span *ngIf="day">{{ day.day }}</span>
-                              <div (click)="openSummary()" *ngIf="day && day.events && day.events.length > 0" class="event-summary">
-                                <div   *ngFor="let event of day.events" class="event">
+                              <div *ngIf="day && day.events && day.events.length > 0" class="event-summary">
+                                <div *ngFor="let event of day.events" class="event" (click)="openModalUpdate(event)">
                                   {{ event.time }} - {{ event.fullname }}
                                 </div>
                               </div>
@@ -73,6 +73,7 @@
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour" >{{ hour }}</td>
                             <td *ngFor="let week of weeksInMonth" (click)="openModal()"> 
+                              
                             </td>
                             
                           </tr>
@@ -104,7 +105,7 @@
                         <tbody>
                           <tr *ngFor="let hour of hoursInDay">
                             <td class="hour">{{ hour }}</td>
-                            <td (click)="openModal()">
+                            <td (click)="openModal(currentDay)">
                               <div *ngIf="day && day.events.length > 0" class="event-summary">
                                 {{ getEventSummary(day.events) }}
                               </div>

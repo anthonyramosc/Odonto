@@ -61,7 +61,14 @@
           font-weight: bold;
           text-align: center;
         }
-        
+        .event-summary {
+          font-size: 0.8em;
+          margin-top: 5px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+         z-index: 1060 !important; 
+
         .event {
           background-color: #007bff;
           color: white;
@@ -71,7 +78,7 @@
           margin-bottom: 2px;
           display: block;
           
-        }
+        }}
       }
     }
   }

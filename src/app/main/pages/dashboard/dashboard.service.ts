@@ -22,23 +22,33 @@ export interface Event {
   providedIn: 'root'
 })
 export class DashboardService {
-  private eventsUrl = 'assets/data/events.json'; 
-
-  constructor(private http: HttpClient) { }
+  private EVENTS_KEY = 'events';
 
   getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.eventsUrl)
-      .pipe(
-        tap(_ => console.log('Eventos obtenidos del archivo dashboard.json')),
-        catchError(this.handleError<Event[]>('getEvents', []))
-      );
+    const events = this.getEventsFromLocalStorage();
+    return of(events).pipe(
+      tap(_ => console.log('Eventos obtenidos del localStorage')),
+      catchError(this.handleError<Event[]>('getEvents', []))
+    );
   }
 
   addEvent(event: Event): Observable<Event> {
+    const events = this.getEventsFromLocalStorage();
+    events.push(event);
+    this.saveEventsToLocalStorage(events);
     return of(event).pipe(
       tap((newEvent: Event) => console.log(`added event w/ id=${newEvent.id}`)),
       catchError(this.handleError<Event>('addEvent'))
     );
+  }
+
+  private getEventsFromLocalStorage(): Event[] {
+    const eventsJson = localStorage.getItem(this.EVENTS_KEY);
+    return eventsJson ? JSON.parse(eventsJson) : [];
+  }
+
+  private saveEventsToLocalStorage(events: Event[]): void {
+    localStorage.setItem(this.EVENTS_KEY, JSON.stringify(events));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

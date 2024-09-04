@@ -29,14 +29,30 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardService
   ) { 
     this.newEvent = this.createEmptyEvent();
+    this.getEvents();
   }
 
   ngOnInit(): void {
     this.menu = this._coreMenuService.getCurrentMenu();
-    this.loadEvents();
+    //this.loadEvents();
     
   }
 
+  getEvents() {
+    this.dashboardService.getEvents().subscribe(events => {
+      this.events = events;
+      this.generateWeeksInMonth();
+    });
+  }
+
+  getEventsForDay(day: Date): Event[] {
+    return this.events.filter(event => new Date(event.date).getDate() === day.getDate());
+  }
+
+  getEventSummary(events: Event[]): string {
+    return events.map(event => `${event.time} - ${event.fullname}`).join('\n');
+  }
+  /*
   loadEvents(): void {
     console.log('Iniciando carga de eventos...');
     this.dashboardService.getEvents()
@@ -48,13 +64,12 @@ export class DashboardComponent implements OnInit {
         },
         error => console.error('Error al cargar eventos:', error)
       );
-  }
+  }*/
   
   isMonthlyViewVisible = true;
   isWeeklyViewVisible = false;
   isDailyViewVisible = false;
   isModalOpen = false;
-  isSummaryOpen = false;
   newEventText: string = '';
   currentCell: HTMLElement | null = null;
   currentDay= new Date();
@@ -86,18 +101,18 @@ export class DashboardComponent implements OnInit {
     "10:00am", "10:15am", "10:30am", "10:45am",
     "11:00am", "11:15am", "11:30am", "11:45am",
     "12:00pm", "12:15pm", "12:30pm", "12:45pm",
-    "1:00pm", "1:15pm", "1:30pm", "1:45pm",
-    "2:00pm", "2:15pm", "2:30pm", "2:45pm",
-    "3:00pm", "3:15pm", "3:30pm", "3:45pm",
-    "4:00pm", "4:15pm", "4:30pm", "4:45pm",
-    "5:00pm", "5:15pm", "5:30pm", "5:45pm",
-    "6:00pm", "6:15pm", "6:30pm", "6:45pm",
-    "7:00pm", "7:15pm", "7:30pm", "7:45pm",
-    "8:00pm", "8:15pm", "8:30pm", "8:45pm",
-    "9:00pm", "9:15pm", "9:30pm", "9:45pm",
-    "10:00pm", "10:15pm", "10:30pm", "10:45pm",
-    "11:00pm", "11:15pm", "11:30pm", "11:45pm",
-    "12:00am"
+    "13:00pm", "13:15pm", "13:30pm", "13:45pm",
+    "14:00pm", "14:15pm", "14:30pm", "14:45pm",
+    "15:00pm", "15:15pm", "15:30pm", "15:45pm",
+    "16:00pm", "16:15pm", "16:30pm", "16:45pm",
+    "17:00pm", "17:15pm", "17:30pm", "17:45pm",
+    "18:00pm", "18:15pm", "18:30pm", "18:45pm",
+    "19:00pm", "19:15pm", "19:30pm", "19:45pm",
+    "20:00pm", "20:15pm", "20:30pm", "20:45pm",
+    "21:00pm", "21:15pm", "21:30pm", "21:45pm",
+    "22:00pm", "22:15pm", "22:30pm", "22:45pm",
+    "23:00pm", "23:15pm", "23:30pm", "23:45pm",
+    "24:00am"
   ];
 
 
@@ -152,7 +167,7 @@ export class DashboardComponent implements OnInit {
     this.isDailyViewVisible = true;
   }
 
-  openModal(day: number | Date) {
+  openModal(day: number | Date, event: Event) {
     if (typeof day === 'number') {
       this.currentDay = new Date(this.currentYear, this.currentMonth, day);
     } else if (day instanceof Date) {
@@ -161,13 +176,20 @@ export class DashboardComponent implements OnInit {
       this.currentDay = new Date(); 
     }
     this.isModalOpen = true;
+    console.log('Nuevo')
     this.newEvent = this.createEmptyEvent();
     this.newEvent.date = this.currentDay.toISOString().split('T')[0];
   }
 
-  openSummary(){
-    this.isSummaryOpen = true;
+  //Add
+  openModalUpdate(event: Event) {
+    this.isModalOpen = true;
+    console.log('Evento a actualizar')
+    this.newEvent = this.setEvent(event);
+    this.newEvent.date = this.currentDay.toISOString().split('T')[0];
   }
+
+ 
   
   closeModal() {
     this.isModalOpen = false;
@@ -191,9 +213,23 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  getEventSummary(events: Event[]): string {
-    return events.map(event => `${event.time} - ${event.fullname}`).join('\n');
+  setEvent(event: Event): Event {
+    return {
+      id: event.id,
+      fullname: event.fullname,
+      identification: event.identification,
+      phone: event.phone,
+      email: event.email,
+      doctor: '',
+      date: new Date().toISOString().split('T')[0],
+      time: '',
+      referral: '',
+      reason: '',
+      observations: ''
+    };
   }
+
+
 
   saveEvent(): void {
     console.log('Guardando evento:', this.newEvent);
@@ -207,7 +243,7 @@ export class DashboardComponent implements OnInit {
         },
         error => console.error('Error al guardar evento:', error)
       );
-  } 
+  }
 
   formatDateKey(date: Date): string {
     if (!(date instanceof Date)) {
@@ -278,16 +314,23 @@ export class DashboardComponent implements OnInit {
   }
   
   getStartOfWeek(date: Date): Date {
-    const start = new Date(date);
-    const day = start.getDay();
-    const diff = start.getDate() - day + (day === 0 ? -6 : 1);
-    return new Date(start.setDate(diff));
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(date.setDate(diff));
+  }
+  
+  getEndOfWeek(startOfWeek: Date): Date {
+    const endOfWeek = new Date(startOfWeek.getTime());
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    return endOfWeek;
   }
 
-  getEndOfWeek(startOfWeek: Date): Date {
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); 
-    return endOfWeek;
+
+
+  test(event: Event){
+    console.log('Evento Click');
+    console.log(event);
+    console.log(event.fullname);
   }
   
 
